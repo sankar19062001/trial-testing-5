@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#002147">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="/manifest.json">
+<title>SIMODRIVE 611 — Diagnostic</title>
+<style>
+/* ── RESET & BASE ── */
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --brand:#002147; --brand2:#003a7a;
+  --green:#2e7d32; --red:#c62828; --amber:#e65100;
+  --bg:#f0f2f5; --card:#fff; --border:#e0e0e0;
+  --text:#1a1a1a; --muted:#666;
+  --radius:14px; --input-h:46px;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',
+     'Noto Sans Tamil','Noto Sans Devanagari',sans-serif;
+     background:var(--bg);height:100dvh;
+     display:flex;flex-direction:column;overflow:hidden;color:var(--text)}
+
+/* ── HEADER ── */
+.hdr{background:var(--brand);color:#fff;padding:10px 14px;
+     display:flex;align-items:center;gap:10px;flex-shrink:0;
+     box-shadow:0 2px 6px rgba(0,0,0,.3)}
+.hdr-icon{font-size:22px;line-height:1}
+.hdr-title{font-size:15px;font-weight:700;line-height:1.25}
+.hdr-sub{font-size:11px;opacity:.7;margin-top:2px}
+.hdr-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+
+/* ── STATUS PILL ── */
+.status-pill{display:flex;align-items:center;gap:5px;font-size:11px;
+             padding:3px 10px;border-radius:20px;
+             background:rgba(255,255,255,.12);color:rgba(255,255,255,.9)}
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.dot-green{background:#66bb6a}.dot-red{background:#ef5350}.dot-amber{background:#ffa726}
+
+/* ── LANG BAR ── */
+.lang-bar{background:var(--brand2);display:flex;align-items:center;
+          gap:6px;padding:6px 12px;flex-shrink:0}
+.lang-lbl{font-size:11px;color:rgba(255,255,255,.6)}
+.lang-btn{border:1px solid rgba(255,255,255,.3);background:transparent;
+          color:rgba(255,255,255,.85);border-radius:14px;padding:4px 11px;
+          font-size:12px;cursor:pointer;transition:.15s}
+.lang-btn.active{background:rgba(255,255,255,.22);color:#fff;
+                  border-color:rgba(255,255,255,.6);font-weight:600}
+
+/* ── MODE TABS ── */
+.mode-tabs{display:flex;background:var(--card);border-bottom:1px solid var(--border);
+           flex-shrink:0}
+.tab{flex:1;padding:10px 4px;font-size:12px;font-weight:600;text-align:center;
+     cursor:pointer;border-bottom:3px solid transparent;color:var(--muted);
+     transition:.15s;user-select:none;letter-spacing:.3px}
+.tab.active{color:var(--brand);border-bottom-color:var(--brand)}
+
+/* ── PANELS ── */
+.panel{display:none;flex:1;flex-direction:column;overflow:hidden;min-height:0}
+.panel.active{display:flex}
+
+/* ══════════════════════════════════════════════
+   CHAT PANEL
+══════════════════════════════════════════════ */
+.chat{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:9px;min-height:0}
+
+/* starters */
+.starters-lbl{padding:6px 12px 2px;font-size:12px;color:var(--muted);flex-shrink:0}
+.starters{padding:6px 10px 2px;display:flex;flex-wrap:wrap;gap:7px;flex-shrink:0}
+.chip{background:var(--card);border:1px solid #ccc;border-radius:18px;
+      padding:7px 13px;font-size:13px;cursor:pointer;white-space:nowrap;
+      transition:.12s;color:var(--text)}
+.chip:active{background:#e3ecf8;border-color:var(--brand)}
+
+/* bubbles */
+.bwrap{display:flex;flex-direction:column}
+.bwrap.user{align-items:flex-end}
+.bwrap.bot {align-items:flex-start}
+.blbl{font-size:10px;font-weight:700;letter-spacing:.4px;
+      text-transform:uppercase;opacity:.5;margin-bottom:3px}
+.bubble{max-width:88%;padding:11px 14px;border-radius:16px;
+        font-size:14px;line-height:1.65;word-break:break-word}
+.bubble-user{background:var(--brand);color:#fff;border-radius:16px 16px 4px 16px}
+.bubble-bot {background:var(--card);color:var(--text);
+             border:1px solid var(--border);border-radius:16px 16px 16px 4px}
+.bubble-bot.ok {background:#e8f5e9;border-color:#a5d6a7}
+.bubble-bot.err{background:#ffebee;border-color:#ffcdd2}
+
+/* typing indicator */
+.typing{display:flex;gap:5px;align-items:center;
+        padding:12px 16px;background:var(--card);
+        border:1px solid var(--border);border-radius:16px;max-width:70px}
+.typing span{width:7px;height:7px;background:#bbb;border-radius:50%;
+             animation:bop .9s infinite}
+.typing span:nth-child(2){animation-delay:.15s}
+.typing span:nth-child(3){animation-delay:.3s}
+@keyframes bop{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+
+/* diagram inside bubble */
+.diagram-card{margin-top:10px;border:1px solid var(--border);border-radius:10px;
+              overflow:hidden;background:#fafafa;padding:8px}
+.diagram-lbl{font-size:11px;color:var(--muted);font-weight:600;margin-bottom:5px}
+
+/* image preview (operator sends photo) */
+.photo-thumb{max-width:200px;max-height:150px;border-radius:8px;
+             border:1px solid var(--border);margin-top:6px;display:block}
+
+/* ── CHAT INPUT ── */
+.chat-input{background:var(--card);border-top:1px solid var(--border);
+            padding:8px 10px;flex-shrink:0}
+.photo-row{display:flex;align-items:center;gap:7px;margin-bottom:7px}
+.photo-lbl{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--muted);
+           cursor:pointer;background:#f5f5f5;border:1px solid #ddd;
+           border-radius:8px;padding:5px 10px}
+.photo-lbl input{display:none}
+.photo-prev{width:34px;height:34px;object-fit:cover;border-radius:5px;display:none}
+.txt-row{display:flex;gap:7px;align-items:flex-end}
+.txt{flex:1;border:1.5px solid #ccc;border-radius:22px;padding:10px 15px;
+     font-size:14px;resize:none;outline:none;max-height:90px;
+     font-family:inherit;line-height:1.4;transition:.15s}
+.txt:focus{border-color:var(--brand)}
+
+/* ── ICON BUTTONS ── */
+.icon-btn{width:44px;height:44px;flex-shrink:0;border:none;border-radius:50%;
+          cursor:pointer;display:flex;align-items:center;justify-content:center;
+          font-size:19px;transition:.15s}
+.voice-btn{background:#e8f5e9;color:var(--green)}
+.voice-btn.listening{background:#ffebee;color:var(--red);animation:pulse 1s infinite}
+.voice-btn:disabled{opacity:.35;cursor:not-allowed}
+.send-btn{background:var(--brand);color:#fff}
+.send-btn:disabled{opacity:.35;cursor:not-allowed}
+.send-btn:active{transform:scale(.93)}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+
+.voice-hint{font-size:11px;color:var(--red);text-align:center;
+            min-height:14px;margin-bottom:3px}
+
+/* ── TICKET CLOSE ── */
+.ticket-bar{display:none;align-items:center;justify-content:space-between;
+            padding:5px 12px;background:#e3f2fd;border-bottom:1px solid #90caf9;
+            flex-shrink:0;font-size:12px;color:#0d47a1}
+.close-ticket{background:#0d47a1;color:#fff;border:none;border-radius:12px;
+              padding:3px 10px;font-size:11px;cursor:pointer}
+
+/* ══════════════════════════════════════════════
+   VOICE PANEL  (full-screen handsfree mode)
+══════════════════════════════════════════════ */
+.voice-panel{flex:1;display:flex;flex-direction:column;
+             align-items:center;justify-content:center;gap:20px;
+             padding:24px;text-align:center}
+.voice-orb{width:130px;height:130px;border-radius:50%;
+           background:var(--brand);display:flex;align-items:center;
+           justify-content:center;font-size:52px;cursor:pointer;
+           border:4px solid transparent;transition:.2s;box-shadow:0 4px 20px rgba(0,33,71,.25)}
+.voice-orb.listening{border-color:var(--red);
+                      box-shadow:0 0 0 12px rgba(198,40,40,.15),0 4px 20px rgba(0,33,71,.25);
+                      animation:ripple 1.5s infinite}
+.voice-orb.speaking{border-color:var(--green);
+                     box-shadow:0 0 0 12px rgba(46,125,50,.15),0 4px 20px rgba(0,33,71,.25)}
+@keyframes ripple{0%{box-shadow:0 0 0 0 rgba(198,40,40,.35),0 4px 20px rgba(0,33,71,.25)}
+                  70%{box-shadow:0 0 0 18px rgba(198,40,40,0),0 4px 20px rgba(0,33,71,.25)}
+                  100%{box-shadow:0 0 0 0 rgba(198,40,40,0),0 4px 20px rgba(0,33,71,.25)}}
+.voice-state{font-size:18px;font-weight:600;color:var(--brand)}
+.voice-sub  {font-size:13px;color:var(--muted);max-width:280px;line-height:1.5}
+.voice-transcript{font-size:13px;color:var(--muted);font-style:italic;
+                  min-height:36px;max-width:300px;padding:6px 12px;
+                  background:var(--card);border-radius:10px;border:1px solid var(--border)}
+.voice-reply{font-size:14px;color:var(--text);max-width:320px;
+             background:var(--card);border:1px solid var(--border);
+             border-radius:12px;padding:12px 16px;line-height:1.6;
+             min-height:56px}
+.voice-again-btn{background:var(--brand);color:#fff;border:none;
+                 border-radius:22px;padding:11px 28px;font-size:14px;
+                 font-weight:600;cursor:pointer;margin-top:6px}
+.voice-again-btn:active{transform:scale(.95)}
+
+/* ══════════════════════════════════════════════
+   HISTORY PANEL
+══════════════════════════════════════════════ */
+.history-panel{flex:1;overflow-y:auto;padding:12px}
+.ticket-card{background:var(--card);border:1px solid var(--border);
+             border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.ticket-head{display:flex;justify-content:space-between;
+             align-items:center;margin-bottom:5px}
+.ticket-id{font-size:11px;color:var(--muted)}
+.ticket-badge{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:600}
+.badge-open{background:#e3f2fd;color:#0d47a1}
+.badge-closed{background:#e8f5e9;color:var(--green)}
+.badge-escalated{background:#ffebee;color:var(--red)}
+.ticket-issue{font-size:13px;font-weight:500;margin-bottom:3px}
+.ticket-meta{font-size:11px;color:var(--muted)}
+.no-tickets{text-align:center;color:var(--muted);padding:40px 20px;font-size:14px}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-icon">⚙️</div>
+  <div>
+    <div class="hdr-title">SIMODRIVE 611 — Diagnostic Assistant</div>
+    <div class="hdr-sub">SOP Manual Ch.7 · 290 fault codes loaded</div>
+  </div>
+  <div class="hdr-right">
+    <div class="status-pill">
+      <div class="dot dot-amber" id="sDot"></div>
+      <span id="sTxt">Connecting…</span>
+    </div>
+  </div>
+</div>
+
+<!-- LANGUAGE BAR -->
+<div class="lang-bar">
+  <span class="lang-lbl">Language:</span>
+  <button class="lang-btn active" onclick="setLang('en-IN',this)">English</button>
+  <button class="lang-btn"        onclick="setLang('ta-IN',this)">தமிழ்</button>
+  <button class="lang-btn"        onclick="setLang('hi-IN',this)">हिन्दी</button>
+</div>
+
+<!-- TICKET BAR -->
+<div class="ticket-bar" id="ticketBar">
+  <span id="ticketLbl">Ticket active</span>
+  <button class="close-ticket" onclick="closeTicket()">Close ticket ✓</button>
+</div>
+
+<!-- MODE TABS -->
+<div class="mode-tabs">
+  <div class="tab active" onclick="switchTab('chat',this)">💬 Chat</div>
+  <div class="tab"        onclick="switchTab('voice',this)">🎙️ Voice</div>
+  <div class="tab"        onclick="switchTab('history',this)">📋 History</div>
+</div>
+
+<!-- ══════════ CHAT PANEL ══════════ -->
+<div class="panel active" id="panel-chat">
+  <div class="chat" id="chat"></div>
+
+  <div class="starters-lbl" id="sLbl">How would you like to start?</div>
+  <div class="starters" id="starters">
+    <div class="chip" onclick="startWith('Fault code on display')">⚠️ Fault code</div>
+    <div class="chip" onclick="startWith('Machine stopped suddenly')">🔴 Machine stopped</div>
+    <div class="chip" onclick="startWith('Unusual noise from motor')">🔊 Unusual noise</div>
+    <div class="chip" onclick="startWith('Motor not turning')">⚡ Motor not turning</div>
+    <div class="chip" onclick="startWith('Drive LED showing red')">🔆 Red LED</div>
+  </div>
+
+  <div class="chat-input">
+    <div class="photo-row">
+      <label class="photo-lbl">
+        📷 Attach photo
+        <input type="file" accept="image/*" capture="environment" id="photoIn" onchange="onPhoto(this)">
+      </label>
+      <img id="photoPrev" class="photo-prev" alt="preview">
+      <span id="photoName" style="font-size:11px;color:var(--muted)"></span>
+    </div>
+    <div class="voice-hint" id="chatVoiceHint"></div>
+    <div class="txt-row">
+      <textarea class="txt" id="msgIn" rows="1"
+        placeholder="Type fault code or describe the problem…"
+        oninput="onInput()" onkeydown="onKey(event)"></textarea>
+      <button class="icon-btn voice-btn" id="chatVoiceBtn"
+              onclick="toggleChatVoice()" title="Voice input" disabled>🎤</button>
+      <button class="icon-btn send-btn" id="sendBtn"
+              onclick="sendChat()" disabled>➤</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ VOICE PANEL ══════════ -->
+<div class="panel" id="panel-voice">
+  <div class="voice-panel">
+    <div class="voice-orb" id="voiceOrb" onclick="toggleVoice()">🎙️</div>
+    <div class="voice-state" id="voiceState">Tap to speak</div>
+    <div class="voice-sub"  id="voiceSub">
+      Speak your fault code or describe the problem in English, Tamil or Hindi.
+      The assistant will reply by voice.
+    </div>
+    <div class="voice-transcript" id="voiceTranscript">Your words will appear here…</div>
+    <div class="voice-reply"      id="voiceReply">Assistant response will appear here…</div>
+    <button class="voice-again-btn" id="voiceAgainBtn"
+            onclick="toggleVoice()" style="display:none">
+      🎤 Speak again
+    </button>
+  </div>
+</div>
+
+<!-- ══════════ HISTORY PANEL ══════════ -->
+<div class="panel" id="panel-history">
+  <div class="history-panel" id="historyContent">
+    <div class="no-tickets">Loading…</div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// GLOBALS
+// ═══════════════════════════════════════════════════════════════
+const BACKEND = window.location.origin;
+
+let activeLang   = 'en-IN';
+let ticketId     = null;
+let isOnline     = false;
+let chatStarted  = false;
+let photoFile    = null;
+let chatListening  = false;
+let voiceListening = false;
+let voiceTicketId  = null;
+let voiceMessages  = [];
+let typingEl       = null;
+
+// ═══════════════════════════════════════════════════════════════
+// TAB SWITCHING
+// ═══════════════════════════════════════════════════════════════
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('panel-' + name).classList.add('active');
+  if (name === 'history') loadHistory();
+  window.speechSynthesis?.cancel();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// LANGUAGE
+// ═══════════════════════════════════════════════════════════════
+function setLang(code, btn) {
+  activeLang = code;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  stopAllVoice();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// HEALTH CHECK
+// ═══════════════════════════════════════════════════════════════
+async function checkHealth() {
+  try {
+    const r = await fetch(BACKEND + '/health', {signal: AbortSignal.timeout(4000)});
+    if (r.ok) { setOnline(true); return; }
+  } catch(_) {}
+  setOnline(false);
+}
+
+function setOnline(on) {
+  isOnline = on;
+  const dot = document.getElementById('sDot');
+  const txt = document.getElementById('sTxt');
+  dot.className = 'dot ' + (on ? 'dot-green' : 'dot-red');
+  txt.textContent = on
+    ? (ticketId ? `Ticket #${ticketId}` : 'Connected')
+    : 'No connection';
+  document.getElementById('sendBtn').disabled = !on || !document.getElementById('msgIn').value.trim();
+  document.getElementById('chatVoiceBtn').disabled = !on;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CHAT — BUBBLES
+// ═══════════════════════════════════════════════════════════════
+function addBubble(role, text, svg, imgSrc, type) {
+  const wrap = document.createElement('div');
+  wrap.className = 'bwrap ' + (role === 'user' ? 'user' : 'bot');
+
+  const lbl = document.createElement('div');
+  lbl.className = 'blbl';
+  lbl.textContent = role === 'user' ? '👷 You' : '🤖 Assistant';
+
+  const b = document.createElement('div');
+  b.className = 'bubble ' + (role === 'user' ? 'bubble-user' :
+    `bubble-bot${type === 'ok' ? ' ok' : type === 'err' ? ' err' : ''}`);
+
+  // Render markdown bold + line breaks
+  b.innerHTML = escHtml(text)
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\n/g, '<br>');
+
+  wrap.appendChild(lbl);
+  wrap.appendChild(b);
+
+  // Photo thumbnail (operator's uploaded image)
+  if (imgSrc) {
+    const img = document.createElement('img');
+    img.src = imgSrc; img.className = 'photo-thumb'; img.alt = 'photo';
+    b.appendChild(img);
+  }
+
+  // SVG diagram from bot
+  if (svg) {
+    const card = document.createElement('div');
+    card.className = 'diagram-card';
+    const dlbl = document.createElement('div');
+    dlbl.className = 'diagram-lbl'; dlbl.textContent = '📐 Maintenance diagram';
+    card.appendChild(dlbl);
+    card.innerHTML += svg;
+    wrap.appendChild(card);
+  }
+
+  document.getElementById('chat').appendChild(wrap);
+  document.getElementById('chat').scrollTop = 99999;
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function showTyping() {
+  typingEl = document.createElement('div');
+  typingEl.className = 'bwrap bot';
+  const t = document.createElement('div');
+  t.className = 'typing';
+  t.innerHTML = '<span></span><span></span><span></span>';
+  typingEl.appendChild(t);
+  document.getElementById('chat').appendChild(typingEl);
+  document.getElementById('chat').scrollTop = 99999;
+}
+
+function hideTyping() { if (typingEl) { typingEl.remove(); typingEl = null; } }
+
+// ═══════════════════════════════════════════════════════════════
+// TTS  — speaks bot reply in the operator's language
+// ═══════════════════════════════════════════════════════════════
+function speak(text, lang) {
+  if (!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const clean = text.replace(/\*\*(.*?)\*\*/g,'$1').replace(/\n/g,'. ');
+  const utt = new SpeechSynthesisUtterance(clean);
+  utt.lang  = lang || activeLang;
+  utt.rate  = 0.92;
+  const voices = window.speechSynthesis.getVoices();
+  const lc = (lang || activeLang).split('-')[0];
+  const match = voices.find(v => v.lang.startsWith(lc));
+  if (match) utt.voice = match;
+  window.speechSynthesis.speak(utt);
+  return utt;
+}
+
+window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+
+function stopAllVoice() {
+  window.speechSynthesis?.cancel();
+  if (chatListening)  stopChatVoice();
+  if (voiceListening) stopVoicePanel();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CHAT — SEND (text + optional image)
+// ═══════════════════════════════════════════════════════════════
+async function sendChat() {
+  const text = document.getElementById('msgIn').value.trim();
+  if (!text || !isOnline) return;
+
+  if (!chatStarted) hideStarters();
+
+  // Show user bubble (with photo preview if present)
+  const previewSrc = photoFile ? URL.createObjectURL(photoFile) : null;
+  addBubble('user', text, null, previewSrc, 'user');
+
+  document.getElementById('msgIn').value = '';
+  document.getElementById('msgIn').style.height = 'auto';
+  document.getElementById('sendBtn').disabled = true;
+  showTyping();
+
+  const fd = new FormData();
+  fd.append('query', text);
+  fd.append('ticket_id', ticketId ?? 'None');
+  fd.append('lang', activeLang);
+  if (photoFile) {
+    fd.append('image', photoFile);
+    clearPhoto();
+  }
+
+  try {
+    const r = await fetch(BACKEND + '/ask', {method:'POST', body:fd});
+    if (!r.ok) throw new Error(`Server ${r.status}`);
+    const d = await r.json();
+
+    ticketId = d.ticket_id;
+    showTicketBar();
+    hideTyping();
+
+    const type = d.resolved ? 'ok' : d.escalate ? 'err' : 'bot';
+    addBubble('bot', d.answer, d.svg || null, null, type);
+    speak(d.answer, d.lang);
+
+  } catch(e) {
+    hideTyping();
+    addBubble('bot', `Connection lost. (${e.message})`, null, null, 'err');
+    setOnline(false);
+  }
+}
+
+function startWith(t) {
+  document.getElementById('msgIn').value = t;
+  sendChat();
+}
+
+function hideStarters() {
+  chatStarted = true;
+  document.getElementById('starters').style.display = 'none';
+  document.getElementById('sLbl').style.display = 'none';
+}
+
+function showTicketBar() {
+  const bar = document.getElementById('ticketBar');
+  bar.style.display = 'flex';
+  document.getElementById('ticketLbl').textContent = `Ticket #${ticketId} active`;
+  document.getElementById('sTxt').textContent = `Ticket #${ticketId}`;
+}
+
+async function closeTicket() {
+  if (ticketId) {
+    try { await fetch(BACKEND + '/resolve?ticket_id=' + ticketId, {method:'POST'}); }
+    catch(_){}
+  }
+  ticketId = null; chatStarted = false;
+  document.getElementById('chat').innerHTML = '';
+  document.getElementById('ticketBar').style.display = 'none';
+  document.getElementById('starters').style.display = 'flex';
+  document.getElementById('sLbl').style.display = 'block';
+  document.getElementById('sTxt').textContent = 'Connected';
+  window.speechSynthesis?.cancel();
+
+  // Reset voice panel session too
+  voiceTicketId = null;
+  voiceMessages = [];
+  setVoiceState('idle');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CHAT — VOICE INPUT (mic inside chat panel)
+// ═══════════════════════════════════════════════════════════════
+let chatRecog = null;
+
+function toggleChatVoice() {
+  if (chatListening) { stopChatVoice(); return; }
+  startChatVoice();
+}
+
+function startChatVoice() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { document.getElementById('chatVoiceHint').textContent = 'Voice needs Chrome browser'; return; }
+
+  chatRecog = new SR();
+  chatRecog.lang = activeLang;
+  chatRecog.interimResults = true;
+
+  chatListening = true;
+  document.getElementById('chatVoiceBtn').classList.add('listening');
+  document.getElementById('chatVoiceHint').textContent = '🔴 Listening — speak now';
+
+  chatRecog.onresult = e => {
+    const txt = Array.from(e.results).map(r => r[0].transcript).join('');
+    document.getElementById('msgIn').value = txt;
+    autoGrow(document.getElementById('msgIn'));
+    document.getElementById('sendBtn').disabled = !txt.trim() || !isOnline;
+    if (e.results[0].isFinal) {
+      document.getElementById('chatVoiceHint').textContent = '✓ Captured';
+    }
+  };
+
+  chatRecog.onerror = e => {
+    document.getElementById('chatVoiceHint').textContent =
+      e.error === 'not-allowed' ? 'Mic permission denied' :
+      e.error === 'no-speech'   ? 'No speech — tap mic and try again' :
+      `Error: ${e.error}`;
+    stopChatVoice();
+  };
+
+  chatRecog.onend = () => {
+    chatListening = false;
+    document.getElementById('chatVoiceBtn').classList.remove('listening');
+    const val = document.getElementById('msgIn').value.trim();
+    if (val && isOnline) setTimeout(() => sendChat(), 350);
+    else document.getElementById('chatVoiceHint').textContent = '';
+  };
+
+  chatRecog.start();
+}
+
+function stopChatVoice() {
+  if (chatRecog) chatRecog.stop();
+  chatListening = false;
+  document.getElementById('chatVoiceBtn').classList.remove('listening');
+  document.getElementById('chatVoiceHint').textContent = '';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// VOICE PANEL — hands-free loop
+// ═══════════════════════════════════════════════════════════════
+// States: idle | listening | thinking | speaking
+let voiceState = 'idle';
+let voiceRecog = null;
+
+function setVoiceState(s) {
+  voiceState = s;
+  const orb   = document.getElementById('voiceOrb');
+  const state = document.getElementById('voiceState');
+  const sub   = document.getElementById('voiceSub');
+  const again = document.getElementById('voiceAgainBtn');
+  orb.className = 'voice-orb';
+  again.style.display = 'none';
+
+  if (s === 'idle') {
+    orb.textContent  = '🎙️';
+    state.textContent = 'Tap to speak';
+    sub.textContent   = 'Speak in English, Tamil or Hindi. The bot will reply by voice.';
+  } else if (s === 'listening') {
+    orb.classList.add('listening');
+    orb.textContent  = '🔴';
+    state.textContent = 'Listening…';
+    sub.textContent   = 'Speak your fault code or describe the problem';
+  } else if (s === 'thinking') {
+    orb.textContent  = '🧠';
+    state.textContent = 'Thinking…';
+    sub.textContent   = 'AI is analyzing the fault';
+  } else if (s === 'speaking') {
+    orb.classList.add('speaking');
+    orb.textContent  = '🔊';
+    state.textContent = 'Speaking…';
+    sub.textContent   = 'Tap orb to interrupt and speak';
+    again.style.display = 'block';
+  }
+}
+
+function toggleVoice() {
+  if (voiceListening || voiceState === 'thinking') {
+    stopVoicePanel(); return;
+  }
+  if (voiceState === 'speaking') {
+    window.speechSynthesis?.cancel();
+    setVoiceState('listening');
+    startVoicePanel();
+    return;
+  }
+  startVoicePanel();
+}
+
+function startVoicePanel() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) {
+    document.getElementById('voiceState').textContent = 'Voice needs Chrome browser';
+    return;
+  }
+
+  if (!isOnline) {
+    document.getElementById('voiceState').textContent = 'No server connection';
+    return;
+  }
+
+  voiceRecog = new SR();
+  voiceRecog.lang = activeLang;
+  voiceRecog.interimResults = true;
+  voiceListening = true;
+  setVoiceState('listening');
+  document.getElementById('voiceTranscript').textContent = '';
+
+  voiceRecog.onresult = e => {
+    const txt = Array.from(e.results).map(r => r[0].transcript).join('');
+    document.getElementById('voiceTranscript').textContent = txt;
+  };
+
+  voiceRecog.onerror = e => {
+    voiceListening = false;
+    document.getElementById('voiceTranscript').textContent = `Error: ${e.error}`;
+    setVoiceState('idle');
+  };
+
+  voiceRecog.onend = async () => {
+    voiceListening = false;
+    const text = document.getElementById('voiceTranscript').textContent.trim();
+    if (!text || !isOnline) { setVoiceState('idle'); return; }
+
+    setVoiceState('thinking');
+
+    // If no voice session ticket, start fresh
+    if (!voiceTicketId) {
+      voiceMessages = [];
+    }
+
+    const fd = new FormData();
+    fd.append('query', text);
+    fd.append('ticket_id', voiceTicketId ?? 'None');
+    fd.append('lang', activeLang);
+
+    try {
+      const r = await fetch(BACKEND + '/ask', {method:'POST', body:fd});
+      if (!r.ok) throw new Error(`Server ${r.status}`);
+      const d = await r.json();
+
+      voiceTicketId = d.ticket_id;
+      if (!ticketId) { ticketId = d.ticket_id; showTicketBar(); }
+
+      document.getElementById('voiceReply').textContent = d.answer;
+      setVoiceState('speaking');
+
+      // Speak and then return to listening
+      const utt = speak(d.answer, d.lang);
+      if (utt) {
+        utt.onend = () => {
+          if (voiceState === 'speaking' && !d.resolved && !d.escalate) {
+            setVoiceState('idle');
+          }
+        };
+      }
+
+    } catch(e) {
+      document.getElementById('voiceReply').textContent = `Error: ${e.message}`;
+      setVoiceState('idle');
+      setOnline(false);
+    }
+  };
+
+  voiceRecog.start();
+}
+
+function stopVoicePanel() {
+  if (voiceRecog) voiceRecog.stop();
+  voiceListening = false;
+  window.speechSynthesis?.cancel();
+  setVoiceState('idle');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PHOTO
+// ═══════════════════════════════════════════════════════════════
+function onPhoto(input) {
+  photoFile = input.files[0] || null;
+  if (photoFile) {
+    document.getElementById('photoPrev').src = URL.createObjectURL(photoFile);
+    document.getElementById('photoPrev').style.display = 'block';
+    document.getElementById('photoName').textContent = photoFile.name;
+  }
+}
+
+function clearPhoto() {
+  photoFile = null;
+  document.getElementById('photoPrev').style.display = 'none';
+  document.getElementById('photoName').textContent = '';
+  document.getElementById('photoIn').value = '';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// HISTORY PANEL
+// ═══════════════════════════════════════════════════════════════
+async function loadHistory() {
+  const el = document.getElementById('historyContent');
+  try {
+    const r = await fetch(BACKEND + '/tickets');
+    const d = await r.json();
+    if (!d.tickets.length) {
+      el.innerHTML = '<div class="no-tickets">No tickets yet. Start a chat to create one.</div>';
+      return;
+    }
+    const LANG = {'en-IN':'EN','ta-IN':'தமிழ்','hi-IN':'हिं'};
+    el.innerHTML = d.tickets.map(t => `
+      <div class="ticket-card">
+        <div class="ticket-head">
+          <span class="ticket-id">#${t.id} · ${t.start || ''} · ${LANG[t.lang] || t.lang || 'EN'}</span>
+          <span class="ticket-badge badge-${(t.status||'open').toLowerCase().replace(' ','')}">
+            ${t.status}
+          </span>
+        </div>
+        <div class="ticket-issue">${escHtml(t.issue || '').substring(0,80)}</div>
+        <div class="ticket-meta">
+          Fault: <strong>${t.fault_code || '—'}</strong> &nbsp;·&nbsp;
+          ${t.turns} turns
+        </div>
+      </div>`).join('');
+  } catch(e) {
+    el.innerHTML = `<div class="no-tickets">Could not load history: ${e.message}</div>`;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// INPUT HELPERS
+// ═══════════════════════════════════════════════════════════════
+function onInput() {
+  autoGrow(document.getElementById('msgIn'));
+  document.getElementById('sendBtn').disabled =
+    !document.getElementById('msgIn').value.trim() || !isOnline;
+}
+
+function autoGrow(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 90) + 'px';
+}
+
+function onKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    if (!document.getElementById('sendBtn').disabled) sendChat();
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SERVICE WORKER + INIT
+// ═══════════════════════════════════════════════════════════════
+if ('serviceWorker' in navigator)
+  navigator.serviceWorker.register('/sw.js').catch(() => {});
+
+checkHealth();
+setInterval(checkHealth, 10000);
+</script>
+</body>
+</html>
