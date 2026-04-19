@@ -1,0 +1,2322 @@
+[
+  {
+    "code": "000",
+    "name": "Alarm diagnostics not possible",
+    "cause": "– Communications to the drive have been interrupted. – Different versions of the ”SimoCom U” start-up and parameterizing tool and the drive.",
+    "remedy": "– Check the communications to the drive (cable, interfaces, ... ) – The V_611U<Version>.acc file on the hard disk of the PG/PC should be adapted to the drive as follows: – Exit ”SimoCom U” – Delete the V_611U<Version>.acc file (search and delete the file) – Restart ”SimoCom U” and go online The V_611U<Version>.acc file is now re-generated and is harmonized to the drive version. Never delete the file V000000.acc!",
+    "acknowledgement": "POWER ON",
+    "stop_response": ""
+  },
+  {
+    "code": "001",
+    "name": "The drive does not have firmware",
+    "cause": "No drive firmware on the memory module.",
+    "remedy": "– Load the drive firmware via SimoCom U – Insert the memory module with firmware",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "002",
+    "name": "Computation time overflow. Suppl. info: \\%X",
+    "cause": "The computation time of the drive processor is no longer sufficient for the selected functions in the specified cycle times. Supplementary information: only for siemens-internal error diagnostics",
+    "remedy": "Disable functions which take up a lot of computation time, e.g.: – Variable signaling function (P1620) – Trace function – Start-up with FFT or analyzing the step response – Speed feedforward control (P0203) – Min/Max memory (P1650.0) – DAC output (max. 1 channel) Increase cycle times: – Current controller cycle (P1000) – Speed controller cycle (P1001) – Position controller cycle (P1009) – Interpolation cycle (P1010)",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP VIII"
+  },
+  {
+    "code": "003",
+    "name": "NMI due to watchdog. Suppl. info: \\%X",
+    "cause": "The watchdog timer on the control module has expired. The cause is a hardware fault in the time basis on the control module. Supplementary information: only for siemens-internal error diagnostics",
+    "remedy": "– Replace control module",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP VIII"
+  },
+  {
+    "code": "004",
+    "name": "Stack overflow. Suppl. info: \\%X",
+    "cause": "The limits of the internal processor hardware stack or the software stack in the data memory have been violated. The cause is probably a hardware fault on the control module. Supplementary information: only for siemens-internal error diagnostics",
+    "remedy": "– Power down / power up drive module – Replace control module",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP VIII"
+  },
+  {
+    "code": "005",
+    "name": "Illegal Opcode, Trace, SWI, NMI (DSP). Suppl. info: \\%X",
+    "cause": "The processor has detected an illegal command in the program memory. Supplementary information: only for siemens-internal error diagnostics",
+    "remedy": "– Replace control module",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP VIII"
+  },
+  {
+    "code": "006",
+    "name": "Checksum test error. Suppl. info: \\%X",
+    "cause": "During the continuous check of the checksum in the program / data memory, a difference was identified between the reference and actual checksum. The cause is probably a hardware fault on the control module. Supplementary information: only for siemens-internal error diagnostics",
+    "remedy": "– Replace control module",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP VIII"
+  },
+  {
+    "code": "007",
+    "name": "Error when initializing. Supplementary info: \\%X",
+    "cause": "An error occurred when loading the firmware from the memory module. Cause: Data transfer error, FEPROM memory cell defective Supplementary information: only for siemens-internal error diagnostics",
+    "remedy": "Carry-out RESET or POWER-ON. If a download is still unsuccessful after several attempts, the memory module must be replaced. If this is unsuccessful the control module is defective and must be replaced.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP VIII"
+  },
+  {
+    "code": "020",
+    "name": "NMI due to cycle failure",
+    "cause": "Basic cycle has failed. Possible causes: EMC faults, hardware fault, control module",
+    "remedy": "– Check the plug-in connections – Implement noise suppression measures (screening, check ground connections) – Replace control module",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP VIII"
+  },
+  {
+    "code": "025",
+    "name": "SSI interrupt",
+    "cause": "An illegal processor interrupt has occurred. An EMC fault or a hardware fault on the control module could be the reason.",
+    "remedy": "– Check the plug-in connections – Replace control module",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP VIII"
+  },
+  {
+    "code": "026",
+    "name": "SCI interrupt",
+    "cause": "An illegal processor interrupt has occurred. An EMC fault or a hardware fault on the control module could be the reason.",
+    "remedy": "– Check the plug-in connections – Replace control module",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP VIII"
+  },
+  {
+    "code": "027",
+    "name": "HOST interrupt",
+    "cause": "An illegal processor interrupt has occurred. An EMC fault or a hardware fault on the control module could be the reason.",
+    "remedy": "– Check the plug-in connections – Replace control module",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP VIII"
+  },
+  {
+    "code": "028",
+    "name": "Actual current sensing during power-up",
+    "cause": "When the current actual value sensing runs up, or in cyclic operation at pulse inhibit, a 0 current is expected. The drive system then identifies that no currents are flowing (excessive deviation to the theoretical center frequency). It is possible that the hardware for the current actual value sensing is defective.",
+    "remedy": "– Check the plug-in connections – Check whether the control module is correctly inserted – Replace control module – Replace the power section",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "029",
+    "name": "Incorrect measuring circuit evaluation. Suppl. info:",
+    "cause": "The motor measuring system has a motor encoder with voltage output which requires a measured circuit evaluation with voltage input, or a resolver with appropriate evaluation. Another measuring circuit evaluation was identified. Supplementary information: only for siemens-internal error diagnostics",
+    "remedy": "– Check the plug-in connections – Implement noise suppression measures (screening, check ground connections, ...) – Control module and encoder must be the same type (sin/cos or resolver) – Replace control module",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "030",
+    "name": "S7 communication error. Supplementary info: \\%X",
+    "cause": "A fatal communication error was identified, or the drive software is no longer consistent. The cause is erroneous communications or a hardware fault on the control module. Supplementary information: only for siemens-internal error diagnostics",
+    "remedy": "– Implement noise suppression measures (screening, check ground connections, ...) – Replace control module",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "031",
+    "name": "Internal data error. Suppl. info: \\%X",
+    "cause": "Error in the internal data, e.g. errors in the element / block lists (incorrect formats, ...). The drive software is no longer consistant. The cause is propably a hardware fault on the control module. Supplementary information: only for siemens-internal error diagnostics",
+    "remedy": "– Re-load drive software – Replace control module",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "032",
+    "name": "Incorrect number of current setpoint filters",
+    "cause": "An illegal number of current setpoint filters was entered (> 4) (maximum number = 4).",
+    "remedy": "Correct number of current setpoint filters (P1200).",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "033",
+    "name": "Incorrect number of speed setpoint filters",
+    "cause": "An inadmissible number of speed setpoint filters (> 2) was entered (max. number = 2).",
+    "remedy": "Correct number of speed setpoint filters (P1500)",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "034",
+    "name": "Axis count function has failed",
+    "cause": "The function for determining the number of axes that physically exist on the power section has calculated an illegal value.",
+    "remedy": "Check that the control module is correctly inserted in the power section or whether the power section is defective.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "035",
+    "name": "Error when saving the user data. Supplementary info:",
+    "cause": "An error occurred when saving the user data in the FEPROM on the memory module. Cause: Data transfer error, FEPROM memory cell defective Note: The user data which was last saved, is still available as long as a new data backup was unsuccessful. Supplementary information: only for siemens-internal error diagnostics",
+    "remedy": "– Re-initiate data save. If unsuccessful after several back-up attempts, then the memory must be formatted via the menu Options-service-FEPROM. The memory module must be replaced if this is also unsuccessful. If the user data valid when the fault occurred are to be re-used with the new and/or formatted memory module, then these must first be readout using SimoCom U. – Carry-out RESET or POWER-ON.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "036",
+    "name": "Error when downloading the firmware. Suppl. info: \\%X",
+    "cause": "A error occurred when downloading a new firmware release. Cause: Data transfer error, FEPROM memory cell defective Note: As the previously used firmware was erased when downloading, the drive expects a new firmware download after RESET or POWER ON. Supplementary information: only for siemens-internal error diagnostics",
+    "remedy": "Carry-out RESET or POWER-ON. The memory module must be replaced if unsuccessful after several download attempts. If this is also unsuccessful, then the control module is defective and must be replaced.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "037",
+    "name": "Error when initializing the user data. Supplementary",
+    "cause": "An error occurred when loading the user data from the memory module. Cause: Data transfer error, FEPROM memory cell defective Supplementary information: only for siemens-internal error diagnostics",
+    "remedy": "– Execute RESET or POWER ON – Parameter file ”Load and save in the drive” or re-configure drive If several back-up attempts are unsuccessful, you should format the service FEPROM via the Tools menu (use SIMOCOMU Version 12.1 or later). If this is unsuccessful, the memory module must be replaced. If this is also unsuccessful, then the control module is defective and must be replaced.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "039",
+    "name": "Error during power section identification. Supplementary info: \\%X",
+    "cause": "Supplementary information 0x100000: More than 1 power section (unit) type was identified. 0x200000: No power section type was identified, although it would have been possible. 0x30xxxx: The identified power module differs from the entered PM (P1106). To xxxx: the code of the identified PM is entered here. 0x400000: Different power section codes (P1106) are entered for this 2-axis module.",
+    "remedy": "– Execute RESET or POWER ON – Check whether the control module is correctly inserted in the power module",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "040",
+    "name": "Expected option module is not available.",
+    "cause": "The parameterization (P0875) expects an option module which is not available on this control module.",
+    "remedy": "Compare the type of the expected option module (P0875) with the type of the inserted option module (P0872) and check/replace the inserted option module or cancel the option module with P0875 = 0.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "041",
+    "name": "The firmware does not support the option module.",
+    "cause": "Supplementary info = 1: An option module is inserted (P0872) or parameterized (P0875), which is not supported by the firmware release of the control module.",
+    "remedy": "Supplementary info = 1: – Upgrade the firmware – Use a legal option module – Cancel the option module with P0875 = 0 Supplementary info = 2: – Use a permissible option module (DP3) – Cancel the option module with P0875 = 0 Supplementary info = 3: – Replace the option module hardware DP1 by option module DP2 or DP3, without changing the drive parameters and the master configuring. The parameter for the expected option module remains at P0875 = 2.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "042",
+    "name": "Internal software error. Supplementary info \\%u",
+    "cause": "There is an internal software error. Supplementary information: only for siemens-internal error diagnostics",
+    "remedy": "– Execute POWER ON-RESET (press button R) – Re-load the software into the memory module (execute software update) – Contact the Hotline – Replace control module",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "043",
+    "name": "Firmware, option module",
+    "cause": "The option module does not contain the currently required firmware.",
+    "remedy": "Use a module with suitable firmware or upgrade the firmware",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "044",
+    "name": "Connection to the option module failed. Supplementary info \\%X",
+    "cause": "The BUS coupling has failed.",
+    "remedy": "– Execute POWER ON-RESET (press button R) – Replace option module",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "045",
+    "name": "Expected option module is axially unequal",
+    "cause": "The option module type, expected from the parameterization, is different for the two axes of a 2-axis module.",
+    "remedy": "Set the expected option module type in P0875 the same for both axes, or cancel for axis B by setting P0875 to 0.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "048",
+    "name": "Illegal status PROFIBUS hardware",
+    "cause": "An illegal status of the PROFIBUS controller was recognized.",
+    "remedy": "– Execute POWER-ON RESET – Check the PROFIBUS unit screw connection – Replace drive module",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "101",
+    "name": "Target position block \\%n < plus software limit switch",
+    "cause": "The target position specified in this block lies outside the range limited by P0316 (plus software limit switch).",
+    "remedy": "– Change the target position in the block – Set the software limit switches differently",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP VI"
+  },
+  {
+    "code": "102",
+    "name": "Target position block \\%n < minus software limit",
+    "cause": "The target position specified in this block lies outside the range limited by P0315 (minus software limit switch).",
+    "remedy": "– Change the target position in the block – Set the software limit switches differently",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP VI"
+  },
+  {
+    "code": "103",
+    "name": "Block number \\%n: Direct output function not possible",
+    "cause": "For the SET_0 or RESET_0 command, an illegal value was entered into P0086:256 (command parameter).",
+    "remedy": "Enter value 1, 2 or 3 into P0086:256 (command parameter).",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP V"
+  },
+  {
+    "code": "104",
+    "name": "Block \\%n: There is no jump target",
+    "cause": "A jump is programmed to a non-existent block number in this traversing block.",
+    "remedy": "Program the existing block number.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP VI"
+  },
+  {
+    "code": "105",
+    "name": "Illegal mode specified in block \\%n",
+    "cause": "Inadmissible information is in P0087:256/P0097 (mode). One position of P0087:256/P0097 has an illegal value. For the commands SET_O and RESET_O, the CONTINUE EXTERNAL block change enable is not permissible. For MDI: The configuration of the external block change P0110 is incorrect. The external block change is only permissible with P0110 = 2 or 3. Block change enable only with ”END” or ”CONTINUE EXTERNAL”. For axis couplings: For COUPLING_IN/COUPLING_OUT via a traversing block (P0410 = 3, 4 or 8), a block change enable with CONTINUE FLYING is not possible.",
+    "remedy": "Check and correct P0087:256/P0097.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP VI"
+  },
+  {
+    "code": "106",
+    "name": "Block \\%n: ABS_POS mode not possible for linear axis",
+    "cause": "For a linear axes, the positioning mode ABS_POS was programmed (only for rotary axes).",
+    "remedy": "Change P0087:256/P0097 (mode).",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP VI"
+  },
+  {
+    "code": "107",
+    "name": "Block \\%n: ABS_NEG mode not possible for a linear",
+    "cause": "For a linear axes, the positioning mode ABS_NEG was programmed (only for rotary axes).",
+    "remedy": "Change P0087:256/P0097 (mode).",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP VI"
+  },
+  {
+    "code": "108",
+    "name": "Block number \\%n available twice",
+    "cause": "There are several traversing blocks with the same block number in the program memory. The block numbers must be unique over all traversing blocks.",
+    "remedy": "Assign unique block numbers.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP VI"
+  },
+  {
+    "code": "109",
+    "name": "External block change not requested in block \\%n",
+    "cause": "For a traversing block with the block change enable CONTINUE EXTERNAL and P0110 (configuration, external block change) = 0, the external block change was not requested.",
+    "remedy": "Remove the cause that the signal edge is missing at the input terminal or for a PROFIBUS control signal STW1.13 or for the appropriate fieldbus signal.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP V"
+  },
+  {
+    "code": "110",
+    "name": "Selected block number \\%n does not exist",
+    "cause": "A block number was selected which is not available in the program memory or has been suppressed.",
+    "remedy": "Select the existing block number. Program the traversing block with the selected block number.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP VI"
+  },
+  {
+    "code": "111",
+    "name": "GOTO in block number \\%n not permissible",
+    "cause": "The step command GOTO may not be programmed for this block number.",
+    "remedy": "Program another command.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP VI"
+  },
+  {
+    "code": "112",
+    "name": "Activate traversing task and start referencing, handwheel simultaneously",
+    "cause": "A positive signal edge was simultaneously detected for the input signals ”Activate traversing task” and ”Start referencing” and ”Activate handwheel”. At power-on or POWER-ON RESET, if both input signals have a ”1” signal, then for both signals a 0/1 edge (positive edge) is simultaneously identified.",
+    "remedy": "Reset both input signals, and re-start the required function after the fault has been acknowledged.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP IV"
+  },
+  {
+    "code": "113",
+    "name": "Activate traversing task and jog, handwheel simultaneously",
+    "cause": "A positive signal edge was simultaneously detected for the input signals ”Activate traversing task” and ”Jog 1”, ”Jog 2” and ”Activate handwheel”. At power-on or POWER-ON RESET, if both input signals have a ”1” signal, then for both signals a 0/1 edge (positive edge) is simultaneously identified.",
+    "remedy": "Reset both input signals, and re-start the required function after the fault has been acknowledged.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP IV"
+  },
+  {
+    "code": "114",
+    "name": "Block change enable END in block number \\%n expected",
+    "cause": "The traversing block with the highest block number does not have END as block step enable.",
+    "remedy": "– Program this traversing block with block step enable END. – Program the GOTO command for this traversing block. – Program additional traversing blocks with higher block number and program the block step enable END (highest block number) in the last block.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP VI"
+  },
+  {
+    "code": "115",
+    "name": "Traversing range start reached",
+    "cause": "The axis has moved to the traversing range limit in a block with the command ENDLOS_NEG (–200 000 000 MSR).",
+    "remedy": "– Acknowledge fault – Move away in the positive direction (e.g. jog)",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP V"
+  },
+  {
+    "code": "116",
+    "name": "Traversing range end reached",
+    "cause": "The axis has moved to the traversing range limit in a block with the command ENDLOS_POS (200 000 000 MSR).",
+    "remedy": "– Acknowledge fault – Move away in the negative direction (e.g. jog)",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP V"
+  },
+  {
+    "code": "117",
+    "name": "Target position block \\%n < start of the traversing",
+    "cause": "The target position specified in this block lies outside the absolute traversing range (–200 000 000 MSR).",
+    "remedy": "Change the target position in the block",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP VI"
+  },
+  {
+    "code": "118",
+    "name": "Target position block \\%n < end of the traversing range",
+    "cause": "The target position specified in this block lies outside the absolute traversing range (200 000 000 MSR).",
+    "remedy": "Change the target position in the block",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP VI"
+  },
+  {
+    "code": "119",
+    "name": "PLUS software limit switch actuated",
+    "cause": "For a block with the ENDLOS_POS command, the axis has actuated the plus software limit switch (P0316) for absolute or relative positioning. The behavior for software limit switch reached, can be set using P0118.0.",
+    "remedy": "– Acknowledge fault – Move away in the negative direction, jog mode",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP V"
+  },
+  {
+    "code": "120",
+    "name": "MINUS software limit switch actuated",
+    "cause": "For a block with the ENDLOS_NEG command, the axis has actuated the minus software limit switch (P0315) for absolute or relative positioning. The behavior for software limit switch reached, can be set using P0118.0.",
+    "remedy": "– Acknowledge fault – Move away in the positive direction, jog mode",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP V"
+  },
+  {
+    "code": "121",
+    "name": "Jog 1, jog 2 or handwheel simultaneously active",
+    "cause": "The input signals ”jog 1”, ”jog 2” or ”activate handwheel” were simultaneously activated.",
+    "remedy": "– Reset both input signals – Acknowledge the fault – Activate the required input signal",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "122",
+    "name": "Parameter \\%u: value range limits violated",
+    "cause": "The value range limit of the parameter was violated when the dimension system was changed over from inches to millimeters.",
+    "remedy": "Place the parameter value within the value range.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "123",
+    "name": "Linear encoder for the selected dimension system illegal",
+    "cause": "For a linear encoder, the dimension system was set to degrees.",
+    "remedy": "Change the dimension system setting (P0100).",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "124",
+    "name": "Referencing and jog simultaneously started",
+    "cause": "For the ”start referencing” and ”Jog 1” and ”Jog 2” input signals, a positive edge was simultaneously identified.",
+    "remedy": "Reset both input signals, and re-start the required function after the fault has been acknowledged.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP V"
+  },
+  {
+    "code": "125",
+    "name": "Falling edge of the reference cam not identified",
+    "cause": "When moving away from the reference cams, the traversing range limit was reached, as the 1/0 edge of the reference cam was not identified.",
+    "remedy": "Check the ”reference cam” input signal and repeat the reference point approach.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "126",
+    "name": "Block \\%n: ABS_POS for rotary axis, is not possible",
+    "cause": "The ABS_POS positioning mode is only permitted for a rotary axis with activated module conversion (P0241 = 1).",
+    "remedy": "Use the valid positioning mode for this axis type.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP VI"
+  },
+  {
+    "code": "127",
+    "name": "Block \\%n: ABS_NEG for rotary axis is not possible",
+    "cause": "The ABS_NEG positioning mode is only permitted for a rotary axis with activated modulo conversion (P0241 = 1).",
+    "remedy": "Use the valid positioning mode for this axis type.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP VI"
+  },
+  {
+    "code": "128",
+    "name": "Block \\%n: Target position lies outside the modulo",
+    "cause": "The programmed target position (P0081:256/P0091) lies outside the set modulo range (P0242).",
+    "remedy": "Program valid target position.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP VI"
+  },
+  {
+    "code": "129",
+    "name": "Maximum velocity for a rotary axis with modulo conversion too high",
+    "cause": "The programmed maximum velocity (P0102) is too high to correctly calculate the modulo offset. The maximum velocity may only be so high, that 90% of the modulo range (P0242) can be traveled through within one interpolation cycle (P1010).",
+    "remedy": "Reduce maximum velocity (P0102).",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP V"
+  },
+  {
+    "code": "130",
+    "name": "Controller or pulse enable withdrawn in motion",
+    "cause": "Possible causes are: – One of the following enable signals was withdrawn while moving: Terminals 48, 63, 64, 663, 65.x, PROFIBUS or bus enable signals, PC enable from SimoCom U – Another fault has occurred, which causes the controller or pulse enable to be withdrawn – The drive is in the power-on inhibit state",
+    "remedy": "– Set the enable signals or check the cause of the first fault which occurred and remove – Remove the power-on inhibit with the edge (0 ––> 1) at control word STW1.0 or terminal 65. – Withdraw the power-on inhibit from the fieldbus signal.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "131",
+    "name": "Following error too high",
+    "cause": "Possible causes are: – The torque or acceleration capability of the drive is exceeded – Position measuring system fault – The position control sense is not correct (P0231) – Mechanical system blocked – Excessive traversing velocity or excessive position setpoint differences",
+    "remedy": "Check the above causes and remove.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "132",
+    "name": "Drive located after the minus software limit switch",
+    "cause": "The axis was moved to the minus software limit switch (P0315), jog mode. The fault can also occur if the software limit switches are inactive if the position actual value falls below the limit value of –200 000 000 MSR, that corresponds to 555 revolutions for a rotary axis.",
+    "remedy": "Return the drive into the traversing range using jog button 1 or 2. Then acknowledge the fault.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP III"
+  },
+  {
+    "code": "133",
+    "name": "Drive located after the plus software limit switch",
+    "cause": "The axis was moved to the plus software limit switch (P0316), jog mode. The fault can also occur if the software limit switches are inactive if the position actual value exceeds the limit value of 200 000 000 MSR, that corresponds to 555 revolutions for a rotary axis.",
+    "remedy": "Return the drive into the traversing range using jog button 1 or 2. Then acknowledge the fault.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP III"
+  },
+  {
+    "code": "134",
+    "name": "Positioning monitoring has responded",
+    "cause": "The drive has not yet reached the positioning window (P0321) after the positioning monitoring time (P0320) has expired. Possible causes: – Positioning monitoring time (P0320) parameters too low – Positioning window (P0321) parameters too low – Position loop gain (P0200) too low – Position loop gain (P0200) too high (instability/tendency to oscillate) – Mechanical block",
+    "remedy": "Check above parameters and correct.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "135",
+    "name": "Standstill monitoring has responded",
+    "cause": "The drive has left the standstill window (P0326) after the standstill monitoring time (P0325) has expired. Possible causes are: – Position actual value inversion (P0231) incorrectly set – Standstill monitoring time (P0325) parameters too low – Standstill window (P0326) parameters too low – Position loop gain (P0200) too low – Position loop gain (P0200) too high (instability/tendency to oscillate) – Mechanical overload – Check connecting cable motor/converter (phase missing, exchanged)",
+    "remedy": "Check above parameters and correct.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "136",
+    "name": "Conv. factor, feedforward contr. speed, parameter set",
+    "cause": "The conversion factor in the position controller between velocity and speed cannot be displayed. This factor depends on the following parameters: – Spindle pitch (P0236), for linear axes – Gearbox ratio (P0238:8 / P0237:8).",
+    "remedy": "Check the above mentioned parameters and correct.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "137",
+    "name": "Conv. factor, pos. contr. output, parameter set \\%d,",
+    "cause": "The conversion factor in the position controller between the following error and the speed setpoint cannot be represented. This factor depends on the following parameters: – Spindle pitch (P0236) (for linear axes) – Gearbox ratio P0238:8 / P0237:8 – Position control loop gain P0200:8",
+    "remedy": "Check the above mentioned parameters and correct.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "138",
+    "name": "Conversion factor between the motor and load too",
+    "cause": "The conversion factor between the motor and load is greater than 2 to the power of 24 or less than 2 to the power of –24.",
+    "remedy": "Check the following parameters and correct: P0236, P0237, P0238, P1005, P1024",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "139",
+    "name": "Modulo range and ratio do not match",
+    "cause": "For EnDat absolute value encoders or for distance-coded measuring systems the ratio between the encoder and load must be so that the full range of the encoder is a multiple of the modulo range. The following condition must be fulfilled (for single turn or for distancecoded encoder 1 instead of P1021/P1031): IM: P1021 * P0238:8 / P0237:8 * 360 / P0242 must be an integer number. DM: P1031 * 360 / P0242 must be an integer number",
+    "remedy": "– Check and correctP1021, P0238:8, P0237:8 – Adapt the modulo range (P0242)",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "140",
+    "name": "Minus hardware limit switch",
+    "cause": "A 1/0 edge was identified at the ”Minus hardware limit switch” input signal.",
+    "remedy": "Return the drive into the traversing range using jog button 1 or 2. Then acknowledge the fault.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP III"
+  },
+  {
+    "code": "141",
+    "name": "Plus hardware limit switch",
+    "cause": "A 1/0 edge was identified at the ”Plus hardware limit switch” input signal.",
+    "remedy": "Return the drive into the traversing range using jog button 1 or 2. Then acknowledge the fault.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP III"
+  },
+  {
+    "code": "142",
+    "name": "Input I0.x not parameterized as equivalent zero mark",
+    "cause": "When entering an external signal as equivalent zero mark (P0174 = 2), input I0.x must be assigned ”equivalent zero mark” function (Fct. No.:79). if a direct measuring system is used, input I0.B must be assigned the ”equivalent zero mark” function (Fct. No.: 79).",
+    "remedy": "– Motor measuring system: P0660 = 79 – Direct measuring system: P0672 = 79",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP IV"
+  },
+  {
+    "code": "143",
+    "name": "Endless traversing and external block change in block \\%n",
+    "cause": "The block change enable CONTINUE_EXTERNAL for the ENDLESS_POS or ENDLESS_NEG command is only permitted with P0110 = 0 or 1.",
+    "remedy": "Block change enable or change P0110.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP VI"
+  },
+  {
+    "code": "144",
+    "name": "Switching-in/switching-out MDI erroneous",
+    "cause": "In the active traversing program, MDI was switched-in or, in the active MDI block, MDI was switched-out.",
+    "remedy": "Acknowledge fault Change P0110",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "145",
+    "name": "Fixed endstop not reached",
+    "cause": "In a traversing block with the FIXED ENDSTOP command, the fixed endstop was not reached. The fixed endstop lies outside the position programmed in this block. After interrupting the function, traverse to fixed stop, the drive was pushed out of its position (drop position).",
+    "remedy": "Check programming Increase kP0326 if the drive was forced out of the position.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP V"
+  },
+  {
+    "code": "146",
+    "name": "Fixed endstop, axis outside the monitoring window",
+    "cause": "In the ”Fixed endstop reached” status, the axis has moved outside the defined monitoring window.",
+    "remedy": "– Check P0116:8 (fixed endstop, monitoring window) – Check mechanical system",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "147",
+    "name": "Enable signals withdrawn at the fixed endstop",
+    "cause": "Possible causes are: – One of the following enable signals was withdrawn while traversing to the fixed endstop: Terminals 48, 63, 64, 663, 65.x, PROFIBUS and bus enable signals, PC enable from SimoCom U – Another fault has occurred, which causes the controller or pulse enable to be withdrawn",
+    "remedy": "Set the enable signals and check the cause of the first fault and remove.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "148",
+    "name": "Velocity in block \\%n outside the range",
+    "cause": "The velocity specified in this block lies outside the range (6 to 2 000 000 000 c*MSR/min).",
+    "remedy": "Change the velocity in the block",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP VI"
+  },
+  {
+    "code": "149",
+    "name": "Incorrect data for modulo axis with absolute encoder.",
+    "cause": "Data error for modulo drive with absolute encoder and any gear factor. – Data was not able to be saved after power-on. – Absolute position was not able to be read-out of the encoder. – P1021 * P0238:8 / P0237:8 * 360 / P0242 must be greater than or equal to 1. – Modulo range must be n * 360 Degrees with n = 1, 2, .... – Drive booting was interrupted. – When parameter set > 0 is selected the ratios P0238:8 / P0237:8 are not equal. Supplementary information: only for siemens-internal error diagnostics",
+    "remedy": "– Adjust the drive by setting the absolute value. – Check the switching threshold in P1162 (minimum DC link voltage). – Check the hysteresis of the DC link voltage monitoring in P1164. – Check parameters P0237:8, P0238:8, P0242. – Check that the DC link voltage is deactivated (P1161 = 0). – Wait until ”run” appears in the seven-segment display before booting. – Check that the activation threshold is less than the DC link voltage (P1162 + P1164 < P1701).",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP V"
+  },
+  {
+    "code": "150",
+    "name": "External position reference value < max. traversing",
+    "cause": "The external position reference value has exceeded the upper traversing range limit. Supplementary info = 0: Limit exceeded after the coupling factors P0401/P0402 identified, i.e. P0032 > 200 000 000 MSR. Supplementary info = 1: Limit exceeded after the coupling factors P0401/P0402 identified, i.e. P0032 * P0402 / P0401 > 200 000 000 MSR.",
+    "remedy": "Return the external position reference value to the value range. Then acknowledge the fault.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "151",
+    "name": "External position reference value < min. traversing",
+    "cause": "The external position reference value has fallen below the lower traversing range limit. Supplementary info = 0: Limit fallen below after the coupling factors P0401/P0402 identified, i.e. P0032 < – 200 000 000 MSR. Supplementary info = 1: Limit fallen below after the coupling factors P0401/P0402 identified, i.e. P0032 * P0402 / P0401 < – 200 000 000 MSR.",
+    "remedy": "Return the external position reference value to the value range. Then acknowledge the fault.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "152",
+    "name": "Pos.ref.val. and act.val. output via the bus interf.",
+    "cause": "The output of the position reference value, position actual value or position offset value is parameterized via PROFIBUS. However, the value to be output can no longer be represented in 32 bits and was therefore limited to the maximum values 0x7fffffff or 0x80000000. The traversing range which can be displayed is given by Lower limit: – 2147483648 * P896/P884 Upper limit: + 2147483647 * P896/P884 The supplementary information explains which process data has violated the lower or upper limit: Supplementary info process data Violation xx1 Position ref. value Xset (No. 50208) Upper limit exceeded xx1 Position ref. value Xset (No. 50208) Lower limit fallen below x1x Position actual value Xact (No. 50206) Upper limit exceeded x2x Position actual value Xact (No. 50206) Lower limit fallen below 1xx Pos. corr. value dxKorr (No. 50210) Upper limit exceeded 2xx Pos. corr. value dxKorr (No. 50210) Lower limit fallen below",
+    "remedy": "– Move drive back e.g. by jogging in the representable traversing range. – Adapt the lower and upper limit to the required traversing range using P884 and P896.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP III"
+  },
+  {
+    "code": "160",
+    "name": "Reference cam not reached",
+    "cause": "After starting the reference point approach, the axis moves through the distance in P0170 (max. distance to the reference cam) without finding the reference cam.",
+    "remedy": "– Check the ”reference cam” signal – Check P0170 – If it is an axis without reference cam, then set P0173 to 1",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP V"
+  },
+  {
+    "code": "161",
+    "name": "Reference cams too short",
+    "cause": "When the axis moves to the reference cam, and does not come to a standstill at the cam, then this error is signaled, i.e. the reference cam is too short.",
+    "remedy": "– Set P0163 (reference point approach velocity) to a lower value – Increase P0104 (maximum deceleration) – Use larger reference cam",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP V"
+  },
+  {
+    "code": "162",
+    "name": "No zero reference pulse present",
+    "cause": "– After the reference cam has been left, the axis has moved through the distance in P0171 (max. distance between the reference cam/ zero pulse), without finding a zero pulse. – For distance-coded measuring system (from SW 8.3 onwards): The maximum permissible distance (clearance) between two reference marks was exceeded.",
+    "remedy": "– Check the encoder with reference to the zero mark – Set P0171 to a higher value",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP V"
+  },
+  {
+    "code": "163",
+    "name": "Encoderless operation and operating mode do not",
+    "cause": "Encoderless operation was parameterized (P1006) and the ”Positioning” mode selected.",
+    "remedy": "Set operating mode ”speed/torque setpoint” (P0700 = 1)",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP V"
+  },
+  {
+    "code": "164",
+    "name": "Coupling released during the traversing job.",
+    "cause": "The coupling was disconnected while a traversing task was running",
+    "remedy": "First exist the traversing task and then disconnect the coupling.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP III"
+  },
+  {
+    "code": "165",
+    "name": "Absolute positioning block not possible",
+    "cause": "Traversing blocks with absolute position data are not permitted while the axis coupling is activated.",
+    "remedy": "Correct traversing block",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP IV"
+  },
+  {
+    "code": "166",
+    "name": "Coupling not possible",
+    "cause": "– No coupling can be established in the actual operating status. – For P0891=2 or 3, it is not possible to couple using the input signal ”Activate coupling through I0.x” (fast input).",
+    "remedy": "– Check the coupling configuration (P0410) – Set angular encoder interface (P0890, P0891) – Check the source of the external position reference value and input signal source.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP VI"
+  },
+  {
+    "code": "167",
+    "name": "Activate coupling signal present",
+    "cause": "– The input signal ”Activate coupling” is present. An edge of the input signal is necessary to activate the coupling. – In the jog mode, while traversing, the input signal ”coupling on” was entered. – The ”coupling in” input signal was entered in handwheel operation.",
+    "remedy": "Reset ”Activate coupling” input signal Acknowledge fault Set the input signal again to switch-in the coupling",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "168",
+    "name": "Overflow, buffer memory",
+    "cause": "Occurs for couplings with queue functionality. A maximum of 16 positions can be saved in P0425:16.",
+    "remedy": "Ensure that maximum 16 positions are saved.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP IV"
+  },
+  {
+    "code": "169",
+    "name": "Coupling trigger missed",
+    "cause": "Occurs for couplings with queue functionality. Synchronizatin is requested using the KOPPLUNG_ON command and it is identified that the position at which the coupling is switched-in, has already bee passed.",
+    "remedy": "Ensure that the slave drive was stationary for at least 1 IPO clock cycle (P1010), before the coupling for the next element in the position memory must be switched-in.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP IV"
+  },
+  {
+    "code": "170",
+    "name": "Coupling switched-out during the traversing program",
+    "cause": "While the drive was executing a traversing program, the ”Activate coupling” input signal was reset.",
+    "remedy": "Only switch-out the coupling if the traversing program has been completed.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP IV"
+  },
+  {
+    "code": "171",
+    "name": "Coupling not possible",
+    "cause": "While the drive was executing a traversing program, the ”Active coupling” input signal was set.",
+    "remedy": "Only switch-in the coupling if the traversing program has been completed.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP V"
+  },
+  {
+    "code": "172",
+    "name": "External block change for coupling not possible",
+    "cause": "If there is an existing coupling, traversing blocks with external block enable are only permitted if P0110 = 2.",
+    "remedy": "Correct traversing program Change P0110 (configuration, external block change)",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP IV"
+  },
+  {
+    "code": "173",
+    "name": "Coupling and traverse to endstop simultaneously",
+    "cause": "Not possible to simultaneously couple and traverse to the endstop.",
+    "remedy": "Correct traversing program",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP V"
+  },
+  {
+    "code": "174",
+    "name": "Passive referencing not possible",
+    "cause": "For the passive referencing, the encoder interface must be switched as input and the ”Positioning” mode must be set.",
+    "remedy": "– Set the ”Positioning” mode (P0700) – Set angular encoder interface (P0890, P0891)",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP IV"
+  },
+  {
+    "code": "175",
+    "name": "Passive referencing not realized. Supplementary info:",
+    "cause": "While the master drive corrects the zero mark offset, the slave drive must pass over a zero mark. Supplementary information 0 = reference cam not found 1 = Reference cam not left 2 = Zero reference pulse not found",
+    "remedy": "Ensure that the cam of the slave drive is located between the cam and the reference point of the master drive. Appropriately shift the cam and/or increase the reference point offset (P0162) at the master drive. If the zero pulse is not found, the reference point offset (P0162) must also be increased at the master drive.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP IV"
+  },
+  {
+    "code": "176",
+    "name": "Absolute encoder must be adjusted",
+    "cause": "Passive referencing with absolute encoders (e.g. EnDat encoders) is only possible after the encoder has been adjusted.",
+    "remedy": "Adjust the drive by setting the absolute value.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP IV"
+  },
+  {
+    "code": "177",
+    "name": "Start-up passive referencing P179 not possible",
+    "cause": "The start-up help for passive referencing determines the reference point offset in P0162 in the slave drive. The following prerequisites must be available: – (permanent) position coupling exists to the master drive – Master drive must be precisely at its reference point – Slave drive has passed the zero mark.",
+    "remedy": "– Establish a coupling at the slave drive: PosStw.4 or input terminal function 72/73 – Reference the master drive: STW1.11 or input terminal function 65 at the master drive – ”Wiring” check: The requirement for passive referencing must be transferred from the master to the slave drive: – Masterdrive: Output via ZSW1.15, QZsw.1 or output terminal function 69 – Slave drive: read-in via STW1.15, QStw.1 or input terminal function 69",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "180",
+    "name": "Teach-in without reference point",
+    "cause": "Teach-in only possible for a referenced axis.",
+    "remedy": "Request reference axis and teach in",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP IV"
+  },
+  {
+    "code": "181",
+    "name": "Teach-in block invalid",
+    "cause": "The specified teach-in block is invalid.",
+    "remedy": "Specify the valid and existing traversing block.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP IV"
+  },
+  {
+    "code": "182",
+    "name": "Teach-in standard block invalid",
+    "cause": "The specified teach-in standard block is invalid.",
+    "remedy": "Specify the valid and existing traversing block.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP IV"
+  },
+  {
+    "code": "183",
+    "name": "Teach-in block not found",
+    "cause": "The specified teach-in block is not found.",
+    "remedy": "Select the valid and existing traversing block. Activate ”Automatically search for block numer” function.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP IV"
+  },
+  {
+    "code": "184",
+    "name": "Teach-in standard block not found",
+    "cause": "The specified teach-in standard block is not found.",
+    "remedy": "Generate the required standard block for the specified block number Enter the correct block number.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP IV"
+  },
+  {
+    "code": "185",
+    "name": "Positioning mode invalid",
+    "cause": "For the ”Spindle positioning” function, the positioning mode (P0087) is not valid.",
+    "remedy": "Program traversing block positioning as absolute, absolute positive or absolute negative.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "186",
+    "name": "Spindle cannot be referenced, supplementary info \\%d",
+    "cause": "For the ”Spindle positioning” function, an error has occurred while positioning. Supplementary info Significance 0 The distance between the last two zero marks was not correct. 1 For two revolutions a zero mark was no longer detected, which was in a tolerance bandwidth of P0126.",
+    "remedy": "Check cable and connections.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "187",
+    "name": "Conversion factor spindle pos. cannot be represented,",
+    "cause": "Conversion factors for spindle positioning was not able to be intialized Supplementary info, ones and tens position: 00: Conversion factor, velocity to speed too small 01: Conversion factor, velocity to speed too high 02: Conversion factor, adaptation filter too low (–> increase P0210) 03: Conversion factor, adaptation filter too high (–> reduce P0210) 04: Conversion factor, pre-control balancing filter too low (–> increase P0206) 05: Conversion factor, pre-control balancing filter too high (–> reduce P0206) 06: Conversion factor, sum delay too small 07: Conversion factor, sum delay too large 08: Conversion factor, following error model too small 09: Conversion factor, following error model too large The hundreds position of the supplementary info contains the parmeter set involved.",
+    "remedy": "Check and correct specified parameters.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "188",
+    "name": "Spindle positioning: P\\%d illegal",
+    "cause": "Spindle positioning requires the following parameteriation: P0241 = 1 P0100 = 3 P1027 Bit 3 = 0 if P0250 = 0 (no EnDat encoder if indirect measuring system is active) P1037 Bit 3 = 0 if P0250 = 1 (no EnDat encoder if direct measuring system is active)",
+    "remedy": "Correct the specified parameter or cancel spindle positioning by setting P0125 to 0.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "189",
+    "name": "Jogging, incremental invalid",
+    "cause": "1. Jogging incremental is not valid in this mode. 2. An attempt was made to move an axis away from a software limit switch using incremental jogging – however the axis is not at the software limit switch, but behind it. 3. An attempt was made while executing one or several traversing blocks (also via an axis coupling) to activate incremental jogging.",
+    "remedy": "1. Commission the drive in the positioning mode. 2. Move back with jog key 1 or 2 with velocity. 3. Interrupt traversing blocks with the operating condition, reject traversing task.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP VI"
+  },
+  {
+    "code": "190",
+    "name": "Actual firmware does not support spindle positioning",
+    "cause": "This firmware does not support the spindle positioning function.",
+    "remedy": "Set parameter P0125 to 0",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "191",
+    "name": "Zero mark setting unsuccessful",
+    "cause": "It is not possible to set the internal zero mark, if 1. Input signal ”Spindle positioning on” is set, or 2. Still no zero mark found.",
+    "remedy": "Maintain the following sequence: 1. Execute spindle positioning ––> zero mark found 2. Withdraw input signal ”spindle positioning on” 3. Set the internal zero mark (P0127=1).",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "192",
+    "name": "Max. search velocity too high",
+    "cause": "The maximum search velocity for spindle positioning is greater than the maximum motor speed.",
+    "remedy": "Reduce parameter P0133 or reduce the velocity in the traversing block.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "193",
+    "name": "Zero mark not found",
+    "cause": "The zero mark (encoder or equivalent zero mark, e.g. BERO) was not found. Gearbox ratio (mechanical system) was not correctly parameterized using parameter P0237/P0238.",
+    "remedy": "– Check the equivalent zero mark (BERO) function, if required, replace the BERO – Readjust the clearance when using BERO – Check the cabling – Correctly parameterize the gearbox ratio (mechanical system) using parameter P0237/P0238",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "194",
+    "name": "Spindle positioning is only possible with motor 1",
+    "cause": "Spindle positioning is only possible with motor 1.",
+    "remedy": "Activate motor data set 1 before the spindle positioning command.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "195",
+    "name": "Speed pre-control not permissible",
+    "cause": "Speed pre-control is not permissible with spindle positioning.",
+    "remedy": "Cancel the speed pre-control (P0203)",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "196",
+    "name": "Illegal combination of input signals (warning \\%u)",
+    "cause": "An illegal combination of signals is present at the inputs, at the Profibus control words or at the appropriate bus signals. The detailed cause of the error can be taken from the help text associated with the warning that is entered as supplementary information. This fault can be activated or suppressed using Parameter P338. Supplementary information: Warning number",
+    "remedy": "Change the input signals or suppress the fault using P338.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "501",
+    "name": "Measuring circuit error, absolute current",
+    "cause": "1. The smoothed absolute current (P1254, current monitoring time constant) is greater than 120 % of the permissible power section current (P1107). 2. For an active rotor position identification, the permissible current threshold was exceeded. 3. The P gain of the controller (P1120) has been set too high.",
+    "remedy": "– Motor/controller data not correct – For active rotor position identification P1019 (current, rotor position identification) check and if required reduce – Reduce the P gain of current controller (P1120), check the current controller adaptation (P1180, P1181, P1182) – Replace control module – Replace the power section",
+    "acknowledgement": "POWER ON",
+    "stop_response": "parameterizable"
+  },
+  {
+    "code": "504",
+    "name": "Measuring circuit error, motor measuring system",
+    "cause": "The encoder signal level is too low, faulted (incorrect shielding), or the cable breakage monitoring function has responded. After separately shutting down the supply voltage at the drive, for SIMODRIVE 611 universal HRS with 1Vpp encoder or SIMODRIVE universalE HRS with 1Vpp encoder, this fault message can be output during the shutdown procedure without any significance for the control.",
+    "remedy": "– Use the original Siemens pre-assembled encoder cables (better screening) – Check for sporadic interruptions (loose contact, e.g. when the drag cable is being moved) – For toothed-wheel encoders, check the clearance between the toothed wheel and sensor – Check the encoder, encoder cables and connectors between the motor and control module – Check the screen connection at the front panel of the control module (top screw) – Replace the encoder cables or the control module – Exchange the encoder or motor – If this fault was signaled without any significance, then it should either be acknowledged in the control or the drive and control should be powered-down together.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "parameterizable"
+  },
+  {
+    "code": "505",
+    "name": "Meas. circ. error motor meas. syst. abs. track",
+    "cause": "1. The motor absolute track (CD track) is monitored for an interrupted conductor. For optical encoders, the absolute track supports the evaluation of the mechanical position within one motor revolution. 2. For absolute encoders with EnDat interface, this fault displays an initialization error. Note: Additional information on the reason for the fault is included in P1023 (IM diagnostics).",
+    "remedy": "– Incorrect encoder cable type – Check for sporadic interruptions (loose contact, e.g. when the drag cable is being moved) – Remove noise which is coupled in due to inadequate screening of the cable by replacing the encoder cable – Incorrect encoder type configured (e.g. ERN instead of EQN) – Check the encoder, encoder cables and connectors between the motor and control module – Replace control module – Replace encoder",
+    "acknowledgement": "POWER ON",
+    "stop_response": "parameterizable"
+  },
+  {
+    "code": "507",
+    "name": "Synchronization error rotor position",
+    "cause": "The difference between the actual rotor position and the new rotor position, which was determined by fine synchronization is greater than 45 degrees electrical. When commissioning a linear motor with rotor position identification (e.g. linear motor, 1FE1 motor), the fine synchronization was not adjusted.",
+    "remedy": "– Adjust the fine synchronization using P1017 (commissioning help function) – Check encoder cable, encoder cable connection and grounding (possibly EMC problems) – Check the shield contact, front panel, control module (upper screw) – Replace control module – Exchange the encoder or motor",
+    "acknowledgement": "POWER ON",
+    "stop_response": "parameterizable"
+  },
+  {
+    "code": "508",
+    "name": "Zero mark monitoring, motor measuring system",
+    "cause": "The measured rotor position fluctuates between 2 encoder zero marks (encoder lines may have been lost). Note: The encoder monitoring function can be disabled using P1600.8.",
+    "remedy": "– Use the original Siemens pre-assembled encoder cables (better screening) – Check for sporadic interruptions (loose contact, e.g. due to cable drag movements) – For toothed-wheel encoders, check the clearance between the toothed wheel and sensor – Check the encoder, encoder cables and connectors between the motor and control module – Check the shield contact, front panel, control module (upper screw) – Replace the encoder cables or the control module – Replace control module – Exchange the encoder or motor",
+    "acknowledgement": "POWER ON",
+    "stop_response": "parameterizable"
+  },
+  {
+    "code": "509",
+    "name": "Drive converter limiting frequency exceeded",
+    "cause": "The drive converter has exceeded the maximum permissible drive converter frequency.",
+    "remedy": "– Encoder pulse number is too low, enter the actual encoder pulse number in P1005 – Stop the belt slipping in open-loop torque controlled mode (the belt slips) – Check P1400 (rated motor speed) – Check P1146 (maximum motor speed) – Check P1147 (speed limiting) – Check P1112 (motor pole pair number) – Check P1134 (rated motor frequency)",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "parameterizable"
+  },
+  {
+    "code": "510",
+    "name": "Positive feedback identified",
+    "cause": "Ramp-up: The actual rotor position and the position information read-out of the encoder were compared with one another while booting and a deviation of more than 45 Degrees was identified, P1011[10]. Operational: The acceleration/velocity direction is different than the torque/force direction. This monitoring function can be set using P1645 and P1646.",
+    "remedy": "– This alarm can also occur when axes are mechanically blocked. Check the fault cause analog to Alarm 605 ”Speed controller output limited”. – Operation may only be resumed after the fault has been removed otherwise there is a danger of uncontrollable motion. Ramp-up: – The deviation is due to dirt on the encoder or incorrect mounting/installation of the encoder or encoder cable. Operational: – If the load oscillates strongly increase the delay for the monitoring (P1645). – Caution : The value in P1645 influences the duration of the axis motion, triggered by positive feedback until the fault responds. – Check the encoder: Mounting, dirt, absolute track fault, lost pulses, encoder cable",
+    "acknowledgement": "POWER ON",
+    "stop_response": "parameterizable"
+  },
+  {
+    "code": "511",
+    "name": "Ground fault detected",
+    "cause": "Firmware has detected a ground fault. Measured phase currents are greater than the response value of the ground fault test configured in P1167 or the motion is greater than the maximum permitted motion for the ground fault test configured in P1168.",
+    "remedy": "– Ground fault in the power cables or at the motor. During the ground fault test, at least one phase increases above the threshold P1167 or P1168. Detailed information can be taken from the diagnostics parameter P1169.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "parameterizable"
+  },
+  {
+    "code": "512",
+    "name": "Measuring circuit error, direct measuring system",
+    "cause": "The encoder signal level is too low, faulted (incorrect shielding), or the cable breakage monitoring function has responded.",
+    "remedy": "– Use the original Siemens pre-assembled encoder cables (better screening) – Check for sporadic interruptions (loose contact, e.g. due to cable drag movements) – For toothed-wheel encoders, check the clearance between the toothed wheel and sensor – Check the encoder, encoder cables and connectors between the encoder and control module – Check the shield contact, front panel, control module (upper screw) – Replace the encoder cables or the control module – Replace encoder",
+    "acknowledgement": "POWER ON",
+    "stop_response": "parameterizable"
+  },
+  {
+    "code": "513",
+    "name": "Measuring circuit error, direct measuring system absolute track",
+    "cause": "For absolute encoders with EnDat interface, this fault indicates an initialization error. Note: Additional information on the reason for the fault is included in P1033 (DM diagnostics).",
+    "remedy": "– Incorrect encoder cable type – Check for sporadic interruptions (loose contact, e.g. when the drag cable is being moved) – Remove noise which is coupled in due to inadequate screening of the cable by replacing the encoder cable – Incorrect encoder type configured (e.g. ERN instead of EQN) – Check the encoder, encoder cables and connectors between the encoder and control module – Replace control module – Replace encoder",
+    "acknowledgement": "POWER ON",
+    "stop_response": "parameterizable"
+  },
+  {
+    "code": "514",
+    "name": "Zero mark monitoring, direct measuring system",
+    "cause": "A fluctuation in the measured values has occurred between 2 encoder zero marks (encoder pulses may have been lost). Note: The encoder monitoring can be disabled using P1600.14.",
+    "remedy": "– Use the original Siemens pre-assembled encoder cables (better screening) – Check for sporadic interruptions (loose contact, e.g. due to cable drag movements) – For toothed-wheel encoders, check the clearance between the toothed wheel and sensor – Check the encoder, encoder cables and connectors between the motor and control module – Check the shield contact, front panel, control module (upper screw) – Replace the encoder cables or the control module – Replace encoder",
+    "acknowledgement": "POWER ON",
+    "stop_response": "parameterizable"
+  },
+  {
+    "code": "515",
+    "name": "Power module temperature, exceeded",
+    "cause": "The power section temperature is sensed using a temperature sensor on the heatsink. The drive is immediately shut down 20 seconds after the heatsink temperature alarm in order to prevent the power section being thermally destroyed (regenerative stop).",
+    "remedy": "Improve the drive module cooling, e.g. using: – Higher airflow in the switching cabinet, possibly cool the ambient air of the drive modules – Avoid many acceleration and braking operations which follow quickly one after the other – Check that the power section for the axis/spindle is adequate, otherwise use a higher-rating module – Ambient temperature too high (refer to the Planning Guide) – Permissible installation altitude exceeded (refer to the Planning Guide) – Pulse frequency too high (refer to the Planning Guide) – Check fan, if required, replace – Maintain the minimum clearance above and below the power section (refer to the Planning Guide)",
+    "acknowledgement": "POWER ON",
+    "stop_response": "parameterizable"
+  },
+  {
+    "code": "591",
+    "name": "Pos.contr.clock cycle not equal to DP clock cycle/",
+    "cause": "For a 2-axis module, one axis is in the n-set mode and one axis in the positioning mode. For the axis in the n-set mode, a position controller clock cycle (of the master) is entered via the clock-cycle synchronous PROFIBUS or the bus interface. This position controller clock cycle differs from the parameterized position controller clock cycle (P1009) of the axis in the positioning mode. The position controller clock cycle of the master is obtained, in the n-set mode, from the DP clock cycle (Tdp) or the clock cycle of the bus interface multiplied by the time grid Tmapc.",
+    "remedy": "For a clock cycle synchronous PROFIBUS (isochronous) or the bus interface, the clock cycles configured for the bus (parameterization) are aligned with the position controller clock cycle P1009 from the positioning axis and n-set axis.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "592",
+    "name": "Spindle positioning: Pos. contr. not equal to master",
+    "cause": "The function ”spindle positioning” requires, for a clock-cycle synchronous PROFIBUS or the bus interface, that the position controller clock cycle of the master matches the parameterized position controller clock cycle (P1009). The position controller clock cycle of the master is obtained from the DP clock cycle (Tdp) multiplied by the time grid Tmapc.",
+    "remedy": "For the clock-cycle synchronous PROFIBUS or the bus interface, the clock cycles configured for the bus (parameterization) are aligned with the position controller clock cycle P1009.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "593",
+    "name": "Fieldbus: Drive is not in synchronism. Supplementary",
+    "cause": "Supplementary information 0x01: The master sign-of-life has more consecutive failures than permitted. The permissible sign-of-life errors are specified using P0879 bits 2–0 (configuration). 0x02: The Global Control telegram to synchronize the clock cycles has failed in operation for several consecutive DP clock cycles or in several DP clock cycles has violated the time grid specified using the parameterizing telegram (refer to times Tdp and Tpllw). If the complete DP communications permanently fails, at the latest after the response monitoring times specified when configuring the bus, fault 595 is also output.",
+    "remedy": "– Check whether communications is briefly or continuously interrupted. – Check whether the BUS master can operate in clock cycle synchronism and outputs the global control telegrams, necessary for clock cycle synchronous operation, in the equidistant DP clock cycle. – Check whether clock synchronism has been activated in the bus configuration, although it is not controlled by the master used. – Check whether the master sign-of-life is received and incremented in the parameterized clock cycle.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "595",
+    "name": "Fieldbus: Cyclic data transfer was interrupted",
+    "cause": "The cyclic data transfer between the master and slave was interrupted due to the fact that cyclic frames were missing, or due to the reception of a parameterizing or configuring frame. Examples: – bus connection interrupted – Master runs up again – Master has changed into the ’Clear’ state For a passive axis, fault cannot be acknowledged using ”RESET FAULT MEMORY”.",
+    "remedy": "Check the master and bus connection to the master. As soon as cyclic data transfer runs again, the fault can be acknowledged. Set P0875 to 0 in the passive axis.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "596",
+    "name": "PROFIBUS: Connection to the publisher \\%u interrupted",
+    "cause": "Cyclic data transfer between this slave and a slave-to-slave communications publisher was interrupted as cyclic telegrams were missing. Examples: – bus connection interrupted – Publisher failure – Master runs up again – The response monitoring (Watchdog) for this slave was de-activated via the parameterizing telegram (SetPrm) (Diagnostics: P1783:1 bit 3 = 0). Supplementary info: PROFIBUS address of the publisher",
+    "remedy": "Check the publisher and bus connections to the publisher, to the master and between the master and publisher. If the watchdog is deactivated, activate the response monitoring for this slave via Drive ES. As soon as cyclic data transfer runs again, the fault can be acknowledged.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "597",
+    "name": "PROFIBUS: Drive not in synchronism. Supplementary",
+    "cause": "Supplementary information 0x01: The master sign-of-life (STW2, bits 12–15) has more consecutive failures than permitted. The permissible sign-of-life error is specified using P0879 bit 2–0 (PROFIBUS configuration). 0x02: The Global Control telegram to synchronize the clock cycles has failed in operation for several DP cycles in a row or has violated the time grid (refer to times Tdp and Tpllw) – specified using the parameterizing telegram – for several DP clock cycles in a row. If the complete DP communications fails permanently, then Fault 599 is also output – at the latest after the response monitoring time specified when the bus was configured, expires.",
+    "remedy": "– Check whether communications is briefly or continuously interrupted. – Check whether the PROFIBUS master can operate in clock cycle synchronism and the Global Control Telegrams, required for clock cycle synchronous operation, are output in the equidistant DP clock cycle. – Check whether clock synchronism has been activated in the bus configuration, although it is not controlled by the master used. – Check whether the master sign-of-life (STW2, bits 12–15) is received and is incremented in the parameterized clock cycle.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "598",
+    "name": "PROFIBUS: Synchronization error. Supplementary",
+    "cause": "Supplementary information 0x01: The expected 1st global control clock cycle display did not occur within the waiting time. 0x02: PLL synchronization unsuccessful 0x03: When synchronizing to the clock cycle, the global control clock cycle had more consecutive failures than are permitted. 0x06: The data frames w. the process data (setpoint direction) were only received after the time (To–125 μs) in the slave has expired.",
+    "remedy": "– Check whether the PROFIBUS master can operate in synchronism with the clock cycle, and that the necessary global-control frames are output for operation in synchronism with the clock cycle. – Check whether clock synchronism has been activated in the bus configuration, although it is not controlled by the master used. – Check whether the equidistant DP clock cycle, transferred with the parameterizing telegram, was actually set and activated at the master. – Check whether the time Tdx – defined in the master configuring – corresponds to the actual data transfer time to all slaves and is less than the configured time (To–125 us).",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "599",
+    "name": "PROFIBUS: Cyclic data transfer was interrupted",
+    "cause": "The cyclic data transfer between the master and slave was interrupted due to the fact that cyclic frames were missing, or due to the reception of a parameterizing or configuring frame. Examples: – bus connection interrupted – Master runs up again – Master has changed into the ’Clear’ state For a passive axis, fault cannot be acknowledged using ”RESET FAULT MEMORY”.",
+    "remedy": "Check the master and bus connection to the master. As soon as cyclic data transfer runs again, the fault can be acknowledged. Set P0875 to 0 in the passive axis.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "600",
+    "name": "Pole position (P1016) has not been set",
+    "cause": "The pole position set (P1016) is 0. Commissioning using P1017= –1 is only possible if P1016 is not equal to 0.",
+    "remedy": "First measure the pole position and enter ( P1016 ), then complete commissioning ( P1017 = –1 ). If P1016 should be precisely 0, enter 0.001.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "parameterizable"
+  },
+  {
+    "code": "601",
+    "name": "Error in AD conversion, terminal 56/14 or 24/20",
+    "cause": "A timing error was identified when reading-out the A/D converter for terminal 56.x/14.x or 24.x/20.x. The read values are probably incorrect / faulty.",
+    "remedy": "Replace closed-loop control module",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "parameterizable"
+  },
+  {
+    "code": "602",
+    "name": "Open-loop torque controlled oper. w/o encoder is not",
+    "cause": "In the IM mode, open-loop torque controlled operation was selected via an input terminal or via PROFIBUS-DP or the bus interface.",
+    "remedy": "Deselect the torque-controlled operation or leave the IM mode (changeover speed P1465).",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "parameterizable"
+  },
+  {
+    "code": "603",
+    "name": "Changeover to non-parameterized motor data set",
+    "cause": "An attempt was made to change over to a motor data set which was not parameterized.",
+    "remedy": "Parameterizing motor data set",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "parameterizable"
+  },
+  {
+    "code": "604",
+    "name": "Motor encoder is not adjusted",
+    "cause": "For an EnDat motor measuring system, it was identified that the serial number does not match that saved, i.e. the encoder has still not run with this drive.",
+    "remedy": "1FN3 linear motors (if P1075 = 1): Measure the rotor position offset to the EMF of the U_R phase and add to P1016 as the commutation angle offset. Then set P1017 to –1 in order to save the serial number of the EnDat encoder. otherwise: To determine commutation angle offset in P1016, initiate the rotor position identification routine via P1017=1. The rotor position identification routine is executed by acknowledging the fault and setting the enable signals. Note: also refer to description of P1017",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "parameterizable"
+  },
+  {
+    "code": "605",
+    "name": "Position controller output limited",
+    "cause": "The speed setpoint requested from the position controller lies above the max. motor speed. Possible causes: – Programmed velocity (P0082:256) too high – Max. acceleration (P0103) or deceleration (P0104) too high – Axis is overloaded or blocked",
+    "remedy": "– Check and correct the above parameter",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "parameterizable"
+  },
+  {
+    "code": "606",
+    "name": "Flux controller output limited",
+    "cause": "The specified flux setpoint cannot be realized, although maximum current is input. – Motor data are incorrect – Motor data and motor connection type (star/delta) do not match – Motor has stalled because motor data are extremely inaccurate – Current limit is too low for the motor (0.9 * P1238 * P1103 < P1136) – Power section is too small",
+    "remedy": "– Correct the motor data – If required use a larger power section",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "parameterizable"
+  },
+  {
+    "code": "607",
+    "name": "Current controller output limited",
+    "cause": "The entered setpoint cannot be impressed in the motor, although the maximum voltage has been entered. The cause could be that the motor is not connected, or a phase is missing.",
+    "remedy": "– Check the connecting cable, motor/drive converter (phase missing) – Check the motor contactor – DC link voltage present? – Check the DC link busbar (check that the screws are tight) – Uce monitoring function in the power section has responded (RESET by powering off/powering on) – Replace the power section or control module",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "parameterizable"
+  },
+  {
+    "code": "608",
+    "name": "Speed controller output limited",
+    "cause": "The speed controller is at its limit for an inadmissibly long time (torque and current limit). The permissible duration is defined in P1605, the speed upper limit up to when the monitoring responds is defined in P1606. Synchronous motor: In normal operation, the correct, optimized axis drive should never reach its current limit – not even for extremely large speed changes (changeover sequences from rapid traverse in the positive direction to rapid traverse in the negative direction). P1605 = 200 ms P1606 = 8000 rev/min Induction motor: Acceleration and braking with the maximum torque/current are usual in operation, only a stalled drive (0 speed) is monitored. P1605 = 200 ms P1606 = 30 rev/min 1. At the first commissioning, after the software has been replaced or the software has been upgraded, after the parameters have been entered the ”calculate motor data” or ”calculate controller data” function was not executed. The drive then keeps the default values (for the values to be calculated this is zero) which can, under certain circumstances, result in this fault (P1605 and P1606 should be adapted to the mechanical and dynamic capabilities of the axis). 2. An undesirable input of a high torque reduction via the analog inputs or via PROFIBUS and the bus interface. For PROFIBUS and the bus interface, this effect especially occurs when changing from the positioning mode to the speed setpoint input mode (check as to whether a torque reduction is entered. Diagnostics using P1717, 0%: No torque, 100%: Full torque).",
+    "remedy": "– Check connecting cable motor/converter (phase missing, exchanged) – Check the motor contactor – Check the torque reduction (P1717) – DC link voltage present? – Check the DC link voltage (check that the screws are tight) – Unblock the motor – Is the motor encoder connected? 7 7 Fault Handling/Diagnostics 7.3 List of faults and alarms – Check the motor encoder cable screen – Is the motor grounded (PE connection)? – Check the encoder pulse number (P1005) – Does the encoder cable fit to the encoder type? – Check the direction of rotation of the encoder tracks (e.g. toothed-wheel encoder, P1011) Adapt parameters P1605 and P1606 to the mechanical and dynamic capabilities of the axis. Check whether a torque reduction has been entered (diagnostics via P1717, 0%: no torque, 100%: full torque). For linear motors: – Check actual value inversion – Check the reduction in the maximum motor current (P1105) and if required increase the value – Check the power cable connection – For the parallel circuit configuration, are the motors correctly assigned and electrically connected? – Uce monitoring function in the power section has responded (RESET by powering off/powering on) – Replace the power section or control module",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "parameterizable"
+  },
+  {
+    "code": "609",
+    "name": "Encoder limit frequency exceeded",
+    "cause": "The speed actual value exceeds the encoder frequency. – Incorrect encoder – P1005 does not correspond to the no. of encoder pulses – Encoder defective – Motor cable defective or not properly attached – Shield on motor encoder cable is not connected – Defective control module",
+    "remedy": "– Enter correct encoder data / replace encoder – Check the encoder pulse number (P1005) – Attach motor cable correctly or replace – Connect the motor encoder cable screen – Reduce the speed setpoint input (P1401) – Replace control module",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "parameterizable"
+  },
+  {
+    "code": "610",
+    "name": "Rotor position identification has failed",
+    "cause": "if P1075 = 1 (technique based on saturation) A rotor position could not be determined from the measurement signals (motor current), as no significant saturation effects occurred. Also refer to parameter P1734 for detailed diagnostics. if P1075 = 3 (motion-based technique) 1. Current increase too low. 2. Maximum permissible duration exceeded. 3. No clear rotor position found.",
+    "remedy": "if P1075 = 1 – Increase current via P1019 – Check armature inductance (P1116) and if required, increase – Check the connecting cable, motor/drive converter (phase missing) – Check the motor contactor – DC link voltage present? – Check the DC link busbar (check that the screws are tight) – Uce monitoring function in the power section has responded (RESET by powering off/powering on) – Replace the power section or control module if P1075 = 3 To 1. – The motor is not correctly connected – The motor power connection must be checked To 2. – Remove disturbing external forces (e.g. axis couplings which are not released) – Identification technique must remain stable (P1076 must be reduced) – Use an encoder with higher resolution – Improve the encoder mounting (it is not stiff enough) To 3. – Remove disturbing external forces (e.g. axis couplings which are not released) – The axis must be able to freely move (e.g. the motor rotor may not be locked) – Reduce the high axis friction (increase P1019)",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "parameterizable"
+  },
+  {
+    "code": "611",
+    "name": "Illegal motion during rotor position identification",
+    "cause": "During the rotor position identification (motor current measurement), the motor rotated more than the value entered in P1020. The rotation could be caused by having powered on with the motor already rotating, or caused by the identification routine itself.",
+    "remedy": "if P1075 = 1 – If the interchange was caused by the identification itself and if the error occurs again, then reduce P1019 or increase P1020. – Lock the motor rotor during the identification routine. if P1075 = 3 – Increase the parameterized load mass (P1076) – Check the maximum permissible motion (P1020) and if required, increase – Reduce the current, rotor position identification (P1019) If the current and speed controller clock cycle have low values (62.5 microseconds), then it maybe necessary to increase P1019.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "parameterizable"
+  },
+  {
+    "code": "612",
+    "name": "Illegal current during rotor position identification",
+    "cause": "1. Current was >= 1.2 * 1.05 * P1107 while rotor position identification was active 2. Current was >= P1104 while rotor position identification was active",
+    "remedy": "With the rotor position identification (P1011.12 and P1011.13) activated, if required, check and reduce P1019 (current, rotor position identification)",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "parameterizable"
+  },
+  {
+    "code": "613",
+    "name": "Shutdown limit, motor overtemperature exceeded.",
+    "cause": ".. is specified in the additional information: 1. The motor temperature is sensed using a KTY temperature sensor. a) The motor temperature has exceeded the temperature limit in P1607. b) The sensor or the cable is interrupted or has a short-circuit. 2. The motor temperature is sensed using a PTC temperature sensor. b) The sensor or the cable has a short-circuit. 3. The thermal motor model has tripped because the permitted thermal motor utilization in P1266 was exceeded.",
+    "remedy": "– Avoid many acceleration and braking operations which follow one another quickly. – Motor overload? – Check whether the motor output is sufficient for the drive, otherwise use a more powerful motor, possibly together with a higher-rating power section. – Check the motor data. The current could be too high due to incorrect motor data. – Temperature sensor monitoring. 7 7 Fault Handling/Diagnostics 7.3 List of faults and alarms – Check whether the sensor type (KTY or PTC) is correctly set in P1609. – If the alarm occurs with the motor in the cold condition check whether the sensor is short-circuited or the cable is interrupted. – Check the motor fan. – Check the motor encoder cable. – Motor encoder defective? – Check and possibly reduce P1230 or P1235. The motor temperature monitoring can be disabled with P1601 bit 13 = 1. For linear motors: – Check the parameters for the motor temperature monitoring P1602 (alarm threshold, motor overtemperature) = 120 degrees C P1603 (timer, motor temperature alarm) = 240 s P1607 (shutdown limit, motor temperature) = 155 degrees C P1608 (fixed temperature) = 0 degrees C P1608 = 0 ––> Temperature sensing active P1608 > 0 ––> Fixed temperature active – If the temperature monitoring is exclusively realized using an external PLC, a fixed temperature must be entered into P1608 (e. g. 80 degrees C). This disables the drive temperature monitoring. – Check the parameters for the thermal motor model P1265 (thermal motor model configuration) P1268 (winding time constant) P1288 (shutdown threshold, thermal motor model) – Check the power connector at the motor – Check the connection of the temperature sensor coupling cable at the end of the power cable, approx. 580 Ohm (KTY) or 100 Ohm (PTC) must be able to be measured at 20 Degrees C – If the measuring system connector is withdrawn (X411 for 611U or MOT ENCODR for POSMO) is approx. 580 Ohm (KTY) or 100 Ohm (PTC) measured between PIN 13 (611U) or 20 (POSMO) and PIN 25 (611U) or 21 (POSMO)at 20 Degree C? – Check the measuring system connector at the drive (X411 or MOT ENCODR) to ensure that it is correctly inserted – For drives connected in parallel, both KTY temperature sensors may not be directly connected. In this case an appropriate evaluation unit, e.g. SME-92 or SME-94 should be used for 2 drives. – If the temperature switch and temperature sensor are connected in series, the temperature sensor (NC contact) may have responded, or the temperature switch is defective 7",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "parameterizable"
+  },
+  {
+    "code": "614",
+    "name": "Delayed shutdown for motor overtemp. (P1602 /",
+    "cause": ".. is specified in the additional information: 1 The motor temperature is sensed using a KTY temperature sensor. a) The motor temperature has exceeded the temperature limit, motor overtemperature P1602 for a longer period of time than that permitted in P1603. b) The sensor or the cable is interrupted or has a short-circuit. 7 Fault Handling/Diagnostics 7.3 List of faults and alarms 2. The motor temperature is sensed using a PTC temperature sensor. a) The motor temperature has exceeded the PTC-specific switching temperature for a time longer than that permitted in P1603. b) The sensor or the cable has a short-circuit. 3. The thermal motor model has tripped because the permitted thermal motor utilization alarm threshold P1269 was exceeded for a time longer than permitted in P1603.",
+    "remedy": "– Avoid many acceleration and braking operations which follow one another quickly. – Motor overload? – Check whether the motor output is sufficient for the drive, otherwise use a more powerful motor, possibly together with a higher-rating power section. – Check the motor data. The current could be too high due to incorrect motor data. – Check the thermal motor utilization alarm threshold P1269. – Temperature sensor monitoring. – Check whether the sensor type (KTY or PTC) is correctly set in P1609. – If the alarm occurs with the motor in the cold condition check whether the sensor is short-circuited or the cable is interrupted. – Check the motor fan. – Check the motor encoder cable. – Motor encoder defective? – Check and possibly reduce P1230 or P1235. The motor temperature monitoring can be disabled with P1601 bit 14 = 1. For linear motors: – Check the parameters for the motor temperature monitoring P1602 (alarm threshold, motor overtemperature) = 120 degrees C P1603 (timer, motor temperature alarm) = 240 s P1607 (shutdown limit, motor temperature) = 155 degrees C P1608 (fixed temperature) = 0 degrees C P1608 = 0 temperature sensing active P1608 > 0 fixed temperature active – If the temperature monitoring is exclusively realized using an external PLC, a fixed temperature must be entered into P1608 (e. g. 80 degrees C). This disables the drive temperature monitoring. – Check the parameters for the thermal motor model P1265 (thermal motor model configuration) P1268 (winding time constant) P1288 (shutdown threshold, thermal motor model) – Check the power connector at the motor – Check the connection of the temperature sensor coupling cable at the end of the power cable, approx. 580 Ohm (KTY) or 100 Ohm (PTC) must be able to be measured at 20 Degrees C – If the measuring system connector is withdrawn (X411 for 611U or MOT ENCODR for POSMO) is approx. 580 Ohm (KTY) or 100 Ohm (PTC) measured between PIN 13 (611U) or 20 (POSMO) and PIN 25 (611U) or 21 (POSMO)at 20 Degree C? – Check the measuring system connector at the drive (X411 or MOT ENCODR) to ensure that it is correctly inserted 7 7 Fault Handling/Diagnostics 7.3 List of faults and alarms – For drives connected in parallel, both KTY temperature sensors may not be directly connected. In this case an appropriate evaluation unit, e.g. SME-92 or SME-94 should be used for 2 drives. – If the temperature switch and temperature sensor are connected in series, the temperature sensor (NC contact) may have responded, or the temperature switch is defective 7",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "parameterizable"
+  },
+  {
+    "code": "615",
+    "name": "DM encoder limiting frequency exceeded",
+    "cause": "The speed actual value of the direct measuring system exceeds the permissible encoder limiting frequency. – Incorrect encoder – P1007 does not coincide with the encoder pulse number – Encoder defective – Defective encoder cable or not correctly retained – Encoder cable shield is not connected – Defective control module",
+    "remedy": "– Enter correct encoder data / replace encoder – Check encoder pulse number (P1007) – Correctly retain encoder cable / replace – Connect encoder cable shield – Reduce speed setpoint input – Replace control module",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "parameterizable"
+  },
+  {
+    "code": "616",
+    "name": "DC link undervoltage",
+    "cause": "The infeed has gone into a fault condition and the DC link voltage has fallen below the permissible lower limit P1162.",
+    "remedy": "– Check whether the line supply voltage is available – Check whether the pulsed resistor is overloaded – Switch-off/switch-on infeed",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "parameterizable"
+  },
+  {
+    "code": "617",
+    "name": "DC link overvoltage",
+    "cause": "The DC link voltage has exceeded the permissible upper limit P1163. Dynamic energy management has been activated using P1155, bit 0 and the DC link voltage has exceeded the ”Maximum DC link voltage dyn. energy management” P1153 (from SW 13.1).",
+    "remedy": "– Check whether the line supply voltage is available – Reduce load duty cycle – Check P1163 – If P1155 bit 0 is activated, increase P1153 or deactivate P1155 bit 0 (from SW 13.1)",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "parameterizable"
+  },
+  {
+    "code": "680",
+    "name": "Illegal motor code number",
+    "cause": "A motor code was entered in P1102 for which no data is available.",
+    "remedy": "– Commission the system again and enter the correct motor code number (P1102). – The ”SimoCom U” parameterizing and start-up tool includes motors that are still not known in this particular drive version. Either upgrade the drive version or enter the motor as non-listed motor.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "681",
+    "name": "Illegal power section code number",
+    "cause": "A power section code was entered in P1106, for which no data is available.",
+    "remedy": "– Enter the correct power unit code in P1106. – For power modules with automatic identification, upgrade firmware.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "682",
+    "name": "Illegal encoder code number in P\\%u",
+    "cause": "An encoder code was entered in P1006 or P1036, for which there is no data. The direct measuring system (P0250/P0879.12) is activated, although an encoder was not specified in P1036.",
+    "remedy": "Enter the correct encoder code or the code for third-party encoders (99) in P1006 or P1036. De-activate direct measuring system (P0250/P0879.12).",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "683",
+    "name": "Calculate controller data was unsuccessful at first",
+    "cause": "An error occurred at the first start-up with ”calculate controller data”. Under fault conditions, the parameters for the current controller, flux controller and speed controller could not be optimally assigned.",
+    "remedy": "Read-out the detailed cause of the error from P1080 and remove the cause. Then initiate ”calculate controller data” again with P1080 = 1. Repeat this operation, until no error is displayed in P1080. Then save in the FEPROM and execute a POWER ON-RESET. Error coding in the supplementary info and P1080: –15 magnetizing reactance (P1141) = 0 –16 leakage reactance (P1139 / P1140) = 0 –17 rated motor frequency (P1134) = 0 –18 rotor resistance (P1138) = 0 –19 motor moment of inertia (P1117) = 0 –21 threshold speed for field weakening (P1142) = 0 –22 motor standstill current (P1118) = 0 –23 The ratio between the maximum motor current (P1104) and the motor stall current (P1118) is greater than the maximum value for the torque limit (P1230) and the power limit (P1235). –24 The ratio between the rated motor frequency (P1134) and the rated motor speed (P1400) is inadmissible (pole pair number).",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "703",
+    "name": "Invalid current controller cycle",
+    "cause": "An illegal value was entered in P1000.",
+    "remedy": "Enter a valid value in P1000. Permissible values for P1000 are: 2 (62.5 μs) for single-axis positioning or for speed setpoint input 4 (125 μs) in each operating mode",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "704",
+    "name": "Invalid speed controller cycle",
+    "cause": "An illegal value was entered into P1001.",
+    "remedy": "Enter a valid value in P1001. Permissible values for P1001 are 2 (62.5 μs, 4 (125 μs), 8 (250 μs), 16 (500 μs. Setting 2 (62.5 μs) is only permissible for single-axis operation. Further, P1001 must be >= P1000.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "705",
+    "name": "Invalid position controller cycle",
+    "cause": "The monitoring function identified a position controller cycle (P1009) outside the permissible limits.",
+    "remedy": "Enter a valid value in P1009. Permissible values for P1009 lie between 32 (1 ms) and 128 (4ms). Further, the position control cycle must be a integral multiple of the speed control cycle.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "706",
+    "name": "Invalid interpolation cycle",
+    "cause": "The monitoring function has identified an interpolation clock cycle (P1010) that is outside the permissible limits or an illegal ratio between the interpolation clock cycle and the position controller clock cycle (P1009).",
+    "remedy": "Enter a valid value in P1010 or correct P1009. Permissible values for P1010 lie between 128 (4ms) and 640 (20ms) or, only for the 1-axis version, also 64 (2ms) if P1009 is also 64 (2ms). Further, the interpolation cycle must be an integral multiple of the position controller cycle.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "708",
+    "name": "Axial deviations in current controller cycle",
+    "cause": "On a 2-axis module, the current controller cycle is different for both axes.",
+    "remedy": "Check P1000 and set the input values the same for both drives.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "709",
+    "name": "Axial deviations in speed controller cycle",
+    "cause": "On a 2-axis module, the speed controller cycle is different for both axes.",
+    "remedy": "Check P1001 and set the input values the same for both drives.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "710",
+    "name": "Axial deviations in position controller or interpolation",
+    "cause": "For a 2-axis module, the position controller clock cycle (P1009) or the interpolation clock cycle (P1010) is different for the two axes.",
+    "remedy": "Check P1009 / P1010 and set the input values for both drives the same.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "716",
+    "name": "Invalid torque constant",
+    "cause": "The ratio between the rated torque and rated current (torque constant [Nm/A]) in P1113 is incorrect (less than/equal to zero) or the ratio P1113 / P1112 is greater than 70.",
+    "remedy": "Enter the valid torque/current ratio for the motor used in P1113 or enter a permissible ratio of P1113 / P1112. Third-party motor: The torque constant should be determined from the motor data sheet. Siemens motor: The torque constant is defined by the motor code (P1102).",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "718",
+    "name": "BERO shutdown threshold exceeded",
+    "cause": "BERO speed actual value is greater than the shutdown threshold specified in P1468 (the motor is prevented from accelerating in an uncontrolled fashion) or for a calculated speed > 1200 rpm, BERO pulses are no longer received (e.g. the cable is interrupted)",
+    "remedy": "Check the parameterization of the induction motor Check BERO or BERO cable, BERO pulse length",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "719",
+    "name": "Motor not parameterized for delta operation",
+    "cause": "When the star-delta changeover is activated using P1013, the motor is not parameterized for delta operation (motor 2).",
+    "remedy": "Check and enter the parameters for delta operation (motor 2).",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "720",
+    "name": "Invalid maximum motor speed",
+    "cause": "Due to the high maximum motor speed in P1401 and the speed controller cycle in P1001, high partial speeds can occur which can result in a format overflow.",
+    "remedy": "Check P1401 and P1001 and correct. The drive software is designed for large reserve margins, so that the displayed alarm can only occur as a result of a parameterizing error. Example: For a speed controller cycle time of 125 microseconds, a motor speed of 480 000 RPM can still be processed correctly!",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "721",
+    "name": "Spindle speed too high",
+    "cause": "As a result of the high spindle speed and the interpolation clock cycle (P1010), the modulo value can no longer be correctly taken into account. The alarm is initiated, if jerky equalization motion occurs – e.g. due to incorrect parameter values.",
+    "remedy": "Shorten the interpolation clock cycle. If possible, increase the modulo range of the rotary axis (P0242). Calculating the spindle speed limit [RPM] = 7 / IPO clock cycle[ms] x 60 x 1000 (for the modulo range, 360 degrees = 1 spindle revolution) Example: IPO clock cycle = 4 ms, for max. 7 revolutions (up to 7 x modulo range) – a maximum spindle speed of 105000 RPM is obtained per IPO clock cycle.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "722",
+    "name": "Changeover speed/velocity too low",
+    "cause": "For the selected setting of P1466, the induced voltage is too low in the lower speed range in order to be able to reliably guarantee sensorless operation. The induced voltage must be at least 40 Volt (phase-tophase, RMS) at the particular speed.",
+    "remedy": "The following should be ensured: Induction motor : P1466 >= 150 RPM Rotary synchronous motor: P1466 > 40000 / P1114 Linear motor: P1466 > 1386 / P1114",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "723",
+    "name": "Axial deviations in STS configuration",
+    "cause": "On a 2-axis module, the gating unit configuration (P1003) is different for the two gating units.",
+    "remedy": "Check P1003 and set the bits for the two module axes the same (do not change the standard setting, this represents the optimum configuration).",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "724",
+    "name": "Invalid motor pole pair number",
+    "cause": "Synchronous motors: – The pole pair number in P1112 is zero or negative. – Encoder with CD track (P1027.6 = 0): The pole pair number in P1112 is greater than 6. – Encoder without CD track or with Hall sensors (P1027.6 = 1): The motor pole pair number is dependent on the encoder pulse number (max. 4096 for P1005 >= 32768). Induction motors: – An invalid pole pair number was determined from P1134 and P1400. Motor with resolver: – The maximum motor pole pair number for the modules 6SN1118–*NK01–0AA* or 6SN1118–*NJ01–0AA* is 64, otherwise 4 or 6.",
+    "remedy": "Synchronous motors: – Check P1112, P1027.6 and P1014. Induction motors: – Determine and correctly enter rated speed and/or rated frequency.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "725",
+    "name": "Invalid encoder pulse number",
+    "cause": "The encoder pulse number of the motor measuring system (P1005) is set to zero.",
+    "remedy": "Harmonize the encoder pulse number of the motor measuring system in P1005 to the encoder used. The indirect motor measuring system must always be configured for synchronous and induction motors (exception: Induction motor operation). Standard setting: 2 048 increments/revolution",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "726",
+    "name": "Invalid voltage constant",
+    "cause": "The voltage constant of the motor in P1114 is set to zero.",
+    "remedy": "Determine the voltage constant of the motor used, and enter in P1114. The voltage constant is measured as induced voltage (EMF) under noload conditions at n = 1 000 RPM as RMS valued at the motor terminals (phase to phase). Third-party motor: The voltage constant should be determined from a motor data sheet. Siemens motor: The voltage constant is determined from the motor code (P1102).",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "727",
+    "name": "Invalid combination of power section and synchronous motor",
+    "cause": "The power module has not been released for synchronous motors.",
+    "remedy": "– Check configuring – Use a valid power section",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "728",
+    "name": "Torque/current adaptation factor too high",
+    "cause": "The adaptation factor between the setpoint torque and the torque generating current (Iq) in the speed controller is too high.",
+    "remedy": "Check P1103, P1107 and P1113 and if required, enter correct values. Third-party motor: The values should be determined from a motor data sheet. Siemens motor: The values are determined from the motor code (P1102).",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "729",
+    "name": "Invalid motor stall current",
+    "cause": "The motor stall current (P1118) is less than or equal to zero.",
+    "remedy": "Determine the stall current of the motor used and enter in P1118. Third-party motor: The stall current should be determined from a motor data sheet. Siemens motor: The stall current is determined from the motor code (P1102).",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "731",
+    "name": "Invalid rated output",
+    "cause": "The rated motor output (P1130) of the motor is less than or equal to zero.",
+    "remedy": "Determine the rated motor output of the motor used and enter in P1130. Third-party motor: The rated motor output should be determined from a motor data sheet. Siemens motor: The rated motor output is determined from the motor code (P1102).",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "732",
+    "name": "Invalid rated speed",
+    "cause": "The rated motor speed (P1400) of the motor is less than or equal to zero.",
+    "remedy": "Determine the rated speed of the motor being used and enter into P1400. Third-party motor: The rated motor speed should be determined from a motor data sheet. Siemens motor: The rated motor speed is determined from the motor code (P1102).",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "738",
+    "name": "Incorrect mode, analog input for the equalization controller",
+    "cause": "If the equalization controller is parameterized with P1490 = 1 –> then P0612 must be parameterized with the value 3",
+    "remedy": "– P0612 = 3 or – P1490 not equal to 1",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "739",
+    "name": "Incorrect axis number, equalization controller",
+    "cause": "If the equalization controller is parameterized with P1490 = 2 –> two active axes must be available on the module.",
+    "remedy": "– P1490 equal to 1 (coupling via analog terminals) or – Activate the 2nd axis or – Use a 2-axis module",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "742",
+    "name": "V/f operation: Drive frequency, motor \\%d not permissible",
+    "cause": "In V/f operation, only drive converter frequencies of 4 or 8 kHz are permissible.",
+    "remedy": "Change P1100 or cancel V/f operation (P1014). When operating with several motors/motor data sets, also set P2100/P3100/P4100 to 4 or 8 kHz.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "743",
+    "name": "Function is not possible using this control board",
+    "cause": "”",
+    "remedy": "”",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "744",
+    "name": "Motor changeover only permissible for the closed-loop",
+    "cause": "Motor changeover (P1013) may only be activated in the closed-loop speed controlled mode (P0700 = 1).",
+    "remedy": "– Inhibit motor changeover (P1013 = 0) – Change over into the closed-loop speed controlled mode (P0700 = 1)",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP I"
+  },
+  {
+    "code": "745",
+    "name": "New EnDat encoder",
+    "cause": "For a direct measuring system with EnDat it was identified that the serial number does not correspond with that saved – i.e. the serial number of the encoder has still not been saved.",
+    "remedy": "Save parameters, then power on",
+    "acknowledgement": "POWER ON",
+    "stop_response": "parameterizable"
+  },
+  {
+    "code": "749",
+    "name": "Speed measuring range is not sufficient",
+    "cause": "The maximum speed which can be achieved with speed feedback cannot be measured using the module.",
+    "remedy": "– Parameterize the encoder type corresponding to the type of motor and the control module. – Synchronous machine: P1147 * the resolver pole pair number must be lower than the limit frequency of the control module. – Asynchronous machine: Min. ( P1146, P1465 ) * the resolver pole pair number must be lower than the limit frequency of the control module. Limit frequency of the control module: 12 bit (1011.2 = 0): 25402 rpm; 14 bit (1011.2 = 1): 6350 rpm (6SN1118–*NK01–0AA0, 6SN1118–*NJ01–0AA0,6SN1118–*NK01–0AA1 or 6SN1118–*NJ01–0AA1) 12 bit: 57421 rpm; 14 Bit: 28710 rpm (6SN1118–*NK01–0AA2 or 6SN1118–*NJ01–0AA2)",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "750",
+    "name": "Speed monitoring BERO incorrectly configured",
+    "cause": "– For the BERO speed monitoring function, parameter P0890 ”Activate angular encoder/encoder interface” must be set to 4 (input for TTL encoder), – Parameter P0894 ”Angular encoder input signal form” must be set to 1 (pulse/direction signal”, – Parameter P1465 ”Changeover speed MSD/IM” set to 0, – Parameter P1006 ”IM encoder code number” or P1036 ”DM encoder code number” must be set to 98 (without encoder).",
+    "remedy": "Adapt the angular encoder interface, change over to operation without encoder, correct the changeover speed.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "751",
+    "name": "Speed controller gain too high",
+    "cause": "P gain, speed controller for the lower speed range (P1407) and the upper speed range (P1408) were selected to be too high. In AM (induction motor) operation: The P gain of the speed controller (P1451) is too high.",
+    "remedy": "Reduce the P gain of the speed controller. Only optimized with the adaption disabled (P1413 = 0). The P gain (P1407) is then effective over the complete speed range. After the optimum setting has been found, adaption can be re-enabled (P1413 = 1) and the P gain optimized for the upper speed range (P1408). In AM (induction motor) operation: For the speed controller, enter a lower value for the P gain (P1451).",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "753",
+    "name": "Current, rotor position identification less than the min.",
+    "cause": "A current was parameterized in P1019 (current, rotor position identification) which is less than the minimum value permissible for the motor.",
+    "remedy": "Enter a current in P1019, which is not less than the permissible minimum value for the motor (40% for third-party synchronous linear motor). It may be necessary to use a larger power module. If permissible for the motor used, suppress the fault by setting P1012, bit 5. Caution: For motors with weak saturation effects (e.g. 1FN3 linear motors), as a result of the low identification current, orientation may be erroneous, thus resulting in uncontrolled motion.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "756",
+    "name": "Invalid speed hysteresis of the current setpoint",
+    "cause": "The hysteresis of the speed for the current setpoint smoothing (P1246) may not be greater than the threshold speed of the hysteresis (P1245), as otherwise a ”negative” lower speed would be obtained.",
+    "remedy": "P1246 (standard value: 50 [RPM]) must be entered lower than the threshold for the speeddependent setpoint smoothing (P1245, standard value: 4 000 [RPM]).",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "757",
+    "name": "PZD config.: illegal frame no. in P0922",
+    "cause": "The frame number set in P0922 is illegal or impermissible for the operating mode currently selected via P0700.",
+    "remedy": "Check P0922 and enter valid value.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "758",
+    "name": "Setpoint source incorrectly parameterized. Supplementary info \\%u",
+    "cause": "The selected setpoint source in P0891 is invalid. 1 Internal coupling not possible for POSMO or single-axis module 2 Internal coupling not possible for drive A 3 Coupling via PROFIBUS-DP or the bus interface selected, but the matching option module is not inserted",
+    "remedy": "Check P891 and enter a valid value.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "759",
+    "name": "Encoder/motor types do not match",
+    "cause": "A linear motor was selected, and no linear scale configured (P1027.4 = 0). A rotating motor was selected and a linear scale configured (P1027.4 = 1). A resolver has been selected the pole pair number (P1018) of which is illegal. A pole pair number =1 or the pole pair number of the motor (P1112) is admissible. The maximum speed (P1146) cannot be measured with the resolver. The required resolution (1011[2] = 1 or 1030[2] = 1, resolver evaluation) cannot be set with this module. For this setting, either 6SN1118–xNK01–0AAx or 6SN1118–xNJ01–0AAx is required.",
+    "remedy": "– Parameterize the encoder type corresponding to the type of motor and the control module. – Use the required (6SN1118–xNK01–0AAx or 6SN1118–xNJ01–0AAx) control module.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "760",
+    "name": "Pole pair width/scale graduations cannot be represented internally",
+    "cause": "For linear motors, the equivalent (internal) pole pair number and (internal) encoder pulse number are calculated from the pole pair width and grid division. In this case, the encoder pulse number must be an integer multiple of one or x pole pair widths. This error message is output if the pole pair width/grid division * x (up to x=4096) is not an integer multiple or if an internal encoder pulse number which was calculated is too high. A result with a tolerance of +/– 0.001 absolute is interpreted to be an integer.",
+    "remedy": "Long travel paths: A linear measuring system with an encoder mark number that is an integral divisor of x* pole pair widths should be used. Short travel paths: For short travel, only a low error can accumulate which has hardly any effect on the maximum achievable force and on the temperature rise, if the encoder pulse number fits with a deviation of more than +/–0.001 in the pole pair width. We then recommend that the pole pair width is slightly changed.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "761",
+    "name": "P0892 cannot be used with this measuring system",
+    "cause": "The following settings are permitted (Order No.[MLFB] 6SN1118–.... ): Incremental measuring systems ( 7 bit ) with sin/cos 1 Vpp without EnDat interface (..*NH00–0AA*, ..*NH10–0AA*) : 0 Incremental measuring systems ( 7 bits ) with sin/cos 1 Vpp with EnDat interface (..*NH00–0AA*, ..*NH10–0AA*) : 0,1,2,3 Incremental measuring systems ( 11 bit ) with sin/cos 1 Vpp (..*NH01–0AA*, ..*NH11–0AA*) : 0,1,2,3,4 Resolver ( 12 bit ) (..*NK00–0AA* or ..*NJ00–0AA*) : 0,1,2,3 Resolver ( 12 bit ) (..*NK01–0AA* or ..*NJ01–0AA*) with 12 bit resolution ( 1011[2] = 0 bzw. 1030[2] = 0 ) : 0,1,2,3,4,5 Resolver ( 14 Bit ) (..*NK01–0AA* or ..*NJ01–0AA*) with 14 bit resolution ( 1011[2] = 1 or 1030[2] = 1 ) : –2,–1,0,1,2,3",
+    "remedy": "Set P0892 (factor, angular encoder pulse number/encoder pulse number) to a valid value.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "762",
+    "name": "P0893 cannot be used with this measuring system",
+    "cause": "For incremental measuring systems with sin/cos 1 Vpp without EnDat interface and for linear measuring systems with sin/cos 1 Vpp with EnDat interface, a zero pulse offset cannot be set via P0893.",
+    "remedy": "Set P0893 (angular encoder zero pulse offset) to 0.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "764",
+    "name": "Multiple assignment of terminal A or B (P0890)",
+    "cause": "When selecting 3 in P0890, from drive A or B (setpoint at terminal A and actual value at terminal B), it was identified, that terminal A or B were already being used by another drive. Thus, this configuration is not possible.",
+    "remedy": "Check the configuration of terminals A and B in P0890 and eliminate multiple assignments of both drives.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "765",
+    "name": "P0890 and P0891 configure both setpoint inputs",
+    "cause": "An actual value coupling is switched-in for drive B (P0891 = 1). At the same time, for the same drive, terminal A or B was parameterized as position setpoint input (P0890 = 2 or 3).",
+    "remedy": "Check the configuration of terminals A and B in P0890, compare with P0891 and eliminate multiple setpoint sources.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "766",
+    "name": "Blocking frequency > Shannon frequency",
+    "cause": "The bandstop frequency of a speed setpoint filter is greater than the Shannon sampling frequency from the sampling theorem.",
+    "remedy": "The bandstop frequency for P1514, filter 1 or P1517 for filter 2 must be less than the inverse value of two speed controller clock cycles 1/ (2 * P1001 * 31.25 microseconds).",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "767",
+    "name": "Natural frequency > Shannon frequency",
+    "cause": "The natural frequency of a speed setpoint filter is greater than the Shannon sampling frequency from the sampling theorem.",
+    "remedy": "The natural frequency of a speed setpoint filter must be lower than the reciprocal of two speed controller cycles. Speed setpoint filter 1: P1520 * 0.01 * P1514 < 1 / (2 * P1001 * 31.25 microseconds) Speed setpoint filter 2: P1521 * 0.01 * P1517 < 1 / (2 * P1001 * 31.25 microseconds)",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "768",
+    "name": "Numerator bandwidth > twice the blocking frequency",
+    "cause": "The numerator bandwidth of a current or speed setpoint filter is greater than twice the blocking frequency. This alarm is only generated for the general bandstop, if the following is valid: Speed setpoint filter 1: P1516 > 2 * P1514 or P1520 <> 100.0 Speed setpoint filter 2: P1519 > 0.0 or P1521 <> 100.0 Current setpoint filter 1: P1212 > 0.0 Current setpoint filter 2: P1215 > 0.0 Current setpoint filter 3: P1218 > 0.0 Current setpoint filter 4: P1221 > 0.0",
+    "remedy": "The numerator bandwidth must be less than twice the bandstop frequency. Current setpoint filter 1: P1212 <= 2 * P1210 Current setpoint filter 2: P1215 <= 2 * P1213 Current setpoint filter 3: P1218 <= 2 * P1216 Current setpoint filter 4: P1221 <= 2 * P1219 Speed setpoint filter 1: P1516 <= 2 * P1514 Speed setpoint filter 2: P1519 <= 2 * P1517",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "769",
+    "name": "Denominator bandwidth > twice the natural frequency",
+    "cause": "The denominator bandwidth of a current or speed setpoint filter is greater than twice the natural frequency. This alarm is only generated for the general bandstop, if the following is valid: Speed setpoint filter 1: P1516 > 2 * P1514 or P1520 <> 100.0 Speed setpoint filter 2: P1519 > 0.0 or P1521 <> 100.0 Current setpoint filter 1: P1212 > 0.0 Current setpoint filter 2: P1215 > 0.0 Current setpoint filter 3: P1218 > 0.0 Current setpoint filter 4: P1221 > 0.0",
+    "remedy": "The denominator bandwidth of a current or speed setpoint filter must be less than twice the natural frequency. Speed setpoint filter 1: P1515 <= 2 * P1514 * 0.01 * P1520 Speed setpoint filter 2: P1518 <= 2 * P1517 * 0.01 * P1521 Current setpoint filter 1: P1211 <= 2 * P1210 Current setpoint filter 2: P1214 <= 2 * P1213 Current setpoint filter 3: P1217 <= 2 * P1216 Current setpoint filter 4: P1220 <= 2 * P1219",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "770",
+    "name": "Format error",
+    "cause": "The calculated bandstop filter coefficients cannot be represented in the internal format.",
+    "remedy": "Change filter setting.",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "771",
+    "name": "Induction motor oper.: drive converter frequency",
+    "cause": "In induction motor operation (selected by P1465 < P1146), drive converter frequencies of 4 or 8 kHz are permissible.",
+    "remedy": "– Change P1100 – Cancel induction motor operation (P1465 > P1146)",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "772",
+    "name": "Induction motor oper.: speed controller gain, motor",
+    "cause": "The P gain of the speed controller (P1451) is too high.",
+    "remedy": "For the speed controller, enter a lower value for the P gain (P1451).",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "773",
+    "name": "Not permissible to active analog input",
+    "cause": "For this particular hardware version, it is not permissible to activate the analog input.",
+    "remedy": "– Set P0607 to 0 and P0612 to 0 or – Use the ”SIMODRIVE 611 universal” control module.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "774",
+    "name": "Induction motor oper.: changeover speed motor \\%d",
+    "cause": "For mixed operation (with / without encoder) P1465 > 0, only closedloop controlled induction motor operation is permissible (P1466 <= P1465).",
+    "remedy": "Eliminate error by selecting pure induction motor operation (P1465 = 0) or by canceling induction motor open-loop controlled operation (P1465 > P1466).",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "775",
+    "name": "SSI encoder incorrectly parameterized. Supplementary",
+    "cause": "Incorrect parameterization of the SSI absolute value encoder. Supplementary info = 0x1, 0x11 (indirect, direct measuring system): ––> The single-turn resolution cannot be 0. Supplementary info = 0x2, 0x12 (indirect, direct measuring system): ––> The number of parameterized bits is greater than the telegram length. Supplementary info = 0x3, 0x13 (indirect, direct measuring system): ––> For linear encoders, it is not possible to have multi-turn resolution.",
+    "remedy": "For supplementary info 1 or 11: Check P1022 and P1032 For supplementary info 2 or 12: Check P1021, P1022, P1027.12 and P1027.14 with respect to P1028 and check P1031, P1032, P1037.12 and P1037.14 with respect to P1041. For supplementary info 3 or 13: Check P1021 and P1031",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP I"
+  },
+  {
+    "code": "776",
+    "name": "TTL encoder not possible for older basic module",
+    "cause": "For an old basic module, which does not support TTL encoders, a TTL encoder was selected as motor measuring system.",
+    "remedy": "Use a new basic module or incremental measuring system with sin/cos 1 Vpp.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP I"
+  },
+  {
+    "code": "777",
+    "name": "Current for the rotor position identification too high",
+    "cause": "A current was parameterized in P1019, which is greater than the current which is permissible for the motor and the power section used.",
+    "remedy": "Reduce the current via P1019.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "778",
+    "name": "Impermissible converter frequency for rotor position ID",
+    "cause": "When selecting the rotor position identification (P1019), drive converter frequencies (P1100) of 4 or 8 kHz are permissible.",
+    "remedy": "Change the drive converter frequency or cancel the rotor position identification.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "779",
+    "name": "Motor moment of inertia, motor \\%d invalid",
+    "cause": "The motor moment of inertia (P1117) is incorrect (less than/equal to zero).",
+    "remedy": "Enter the valid motor moment of inertia for the motor used, in P1117. Third-party motor: The motor moment of inertia should be determined from a motor data sheet. Siemens motor: The characteristic motor data should be determined from the motor code (P1102).",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "780",
+    "name": "No-load current, motor > rated motor current (motor",
+    "cause": "The motor no-load current (P1136) has been parameterized greater than the rated motor current (P1103).",
+    "remedy": "Enter the valid currents for the motor used in P1136 and P1103. Third-party motor: The required currents should be determined using a motor data sheet. Siemens motor: The currents are determined using the motor code (P1102).",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "781",
+    "name": "No-load current, motor \\%d > rated power section current",
+    "cause": "The motor no-load current (P1136) has been set to higher values than the rated power section current. before SW 2.4 the following is valid: Rated power section current = P1111 from SW 2.4 the following is valid: Rated power section current = P1111 * P1099",
+    "remedy": "– Enter the valid current for the motor used in P1136. Third-party motor: The required currents should be determined using a motor data sheet. Siemens motor: The currents are determined using the motor code (P1102). – Reduce the power section pulse frequency P1100. – Use a higher-rating power section (re-commission).",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "782",
+    "name": "Reactance motor \\%d invalid",
+    "cause": "The stator leakage reactance (P1139), the rotor leakage reactance (P1140) or the magnetizing reactance (P1141) of the motor is incorrect (less than/equal to zer0).",
+    "remedy": "Determine the stator, rotor leakage reactance and magnetizing reactance of the motor being used and enter into P1139, P1140 and P1141. Third-party motor: The values should be determined from a motor data sheet. Siemens motor: The values are determined from the motor code (P1102).",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "783",
+    "name": "Rotor resistance, motor \\%d invalid",
+    "cause": "The rotor resistance (P1138, cold) of the motor is zero or there was a format overflow for an internal conversion.",
+    "remedy": "The following parameters can have incorrect values: P1001 (speed controller cycle) P1134 (rated motor frequency) P1138 (rotor resistance) P1139 (leakage stator reactance) P1140 (leakage rotor reactance) P1141 (magnetizing field reactance) Check the parameter, and if required, correct using the motor data sheet. The following condition must be fulfilled: 16 * P1001 * 0.00003125 * P1138 * 2PI * P1134 / (P1140 + P1141) < 1",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "784",
+    "name": "No-load voltage, motor \\%d invalid",
+    "cause": "Error in no-load voltage P1135: – P1135 <= 0 or – P1135 > P1132 or – P1135 * P1142 / P1400 + Vser.react. > 450V. With Vser.react. = 0.181 * P1136 * P1142 * P1119",
+    "remedy": "Determine the no-load voltage of the motor being used and enter into P1135. Third-party motor: The following parameters may have incorrect values: P1119 (inductance of the series reactor) P1132 (rated motor voltage) P1135 (no-load motor voltage) P1400 (rated motor speed) P1142 (threshold speed for field weakening) P1136 (no-load motor current) Check parameters and if required correct using a motor data sheet. Siemens motor: The no-load voltage is determined from the motor code (P1102).",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "785",
+    "name": "No-load current, motor \\%d invalid",
+    "cause": "The no-load current (P1136) of the motor (ARM) is incorrect (less than/ equal to zero).",
+    "remedy": "Determine the no-load current of the motor (ARM) being used and enter into P1136. Third-party motor: The no-load current should be determined from a motor data sheet. Siemens motor: The no-load current is determined from the motor code (P1102).",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "786",
+    "name": "Field-weakening speed, motor \\%d invalid",
+    "cause": "The threshold speed for field weakening for induction motors (P1142) is incorrect (less than/equal to zero).",
+    "remedy": "Determine the speed at which field weakening starts for the motor being used and enter into P1142. Third-party motor: The field weakening speed should be determined from a motor data sheet. Siemens motor: The field weakening speed is determined from the motor code (P1102).",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "787",
+    "name": "Induction motor oper.: feedforward control gain motor",
+    "cause": "The feedforward control gain for induction motors cannot be represented in the internal numerical format if the motor moment of inertia and rated motor torque were unfavorably selected.",
+    "remedy": "Operation without encoder: Reduce the encoder pulse number (P1005), as this is used in the internal numerical format. Operation with encoder: Reduce the speed controller cycle (P1001).",
+    "acknowledgement": "RESET FAULT MEMORY",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "788",
+    "name": "P0891 for drive B only",
+    "cause": "An actual-value link has been activated (P0891 = 1) for drive A. The hardware does not permit this setting.",
+    "remedy": "For drive A, set P0891 to the value 0.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "789",
+    "name": "Setpoint transfer SimoCom U ==> drive interrupted",
+    "cause": "The setpoint transfer from SimoCom U to the drive was interrupted, i.e. there is no longer an online connection. The Master Control was returned to the drive. Communication between the two communication partners was faulty. While moving the drive using SimoCom U, other functions were carried-out on the PG/PC (e.g. online help was opened, a file was opened) so that from SimoCom U the drive can only be irregularly supplied with data.",
+    "remedy": "– Check whether SimoCom U is still operating correctly, if required, re-start – Check whether the communication connection is OK, if required, replace the connecting cable – When in the online mode, do not select any time-intensive functions",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "790",
+    "name": "Illegal operating mode. Supplementary info: \\%u",
+    "cause": "The selected operating mode (P0700) is not permitted for this module or axis. Supplementary info = 0x1: Operating mode ==0 selected on the 1st axis Supplementary info = 0x2: ”Positioing” operating mode selected for the Nset control module Supplementary info = 0x3: Operating mode is not possible with this firmware release Supplementary info = 0x4: ”External position reference value” operating mode no longer possible.",
+    "remedy": "For supplementary info 1: Select valid operating mode (P0700 > 0) For supplementary info 2: Select Nset operating mode or use a positioning module. For supplementary info 3: Use a firmware release which supports this operating mode. For supplementary info 4: Select ”Positioning” operating mode.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP I"
+  },
+  {
+    "code": "791",
+    "name": "TTL encoder interface incorrectly parameterized",
+    "cause": "The TTL encoder interface may only be parameterized as follows for this particular hardware version: Drive A: P0890 = 0 or 4, 0: Interface inactive, 4: TTL encoder input Drive B: P0890 = 0",
+    "remedy": "Set P0890 to permissible value.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "792",
+    "name": "Direct measuring system incorrectly parameterized.",
+    "cause": "It is not permitted to parameterize the direct measuring system. Supplementary info = 0x1: A direct measuring system cannot be used using this board. Supplementary info = 0x2: The direct measuring system cannot be simultaneously operated with drive B. Supplementary info = 0x3: The direct measuring system is active and drive A is set for encoderless operation (P1027 bit 5 = 1).",
+    "remedy": "For supplementary info 1: Use the required board. For supplementary info 2: – De-activate the direct measuring system for drive A (P0250/P0879.12 = 0) or – Switch drive B inactive (P0700 = 0) For supplementary info 3: – De-activate the direct measuring system for drive A (P0250/P0879.12 = 0) or – Commission the motor measuring system for drive A",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP I"
+  },
+  {
+    "code": "793",
+    "name": "Angular encoder signal waveform different for drive A",
+    "cause": "The input signal waveform for the angular encoder interface must be set the same for the drives.",
+    "remedy": "Check P0894 for both drives and set the same",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "794",
+    "name": "P0890 = 3 not permitted for drive B",
+    "cause": "This angular encoder interface setting is not permitted for drive B.",
+    "remedy": "Check P0890 for drive B and set to a permissible value",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "795",
+    "name": "Ang. encoder, pos. ref. value normalization factor too",
+    "cause": "The position reference value normalization for the angular encoder interface is not permissible. Supplementary info = 1 ––> Condition P0401 * P0895 < 8388608 violated = 2 ––> Condition P0402 * P0896 < 8388608 violated",
+    "remedy": "Check parameterization via P0401, P0402, P0895 and P0896. It may be possible to achieve the conditions above by shortening the numerator P0401 * P0895 with the denominator P0402 * P0896.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II"
+  },
+  {
+    "code": "797",
+    "name": "Error in center frequency measurement",
+    "cause": "The anolog / digital converters are initialized during the startup or following pulse disable. During this time the converter cannot be correctly initialized if the encoder rotates too fast or the encoder / motor is connected incorrectly.",
+    "remedy": "Check encoder and motor cables. Switch on the converter if the motor is stationary or does no longer rotate too fast.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP I"
+  },
+  {
+    "code": "798",
+    "name": "Measured value memory active",
+    "cause": "The measured-value memory was active during power-up.",
+    "remedy": "Run up again.",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP I"
+  },
+  {
+    "code": "799",
+    "name": "FEPROM backup and HW Reset required",
+    "cause": "– The parameters have been recalculated. After this recalculation, the parameters must be saved and the module started up again. – An incorrect number of encoder marks has been selected on an EnDat encoder.",
+    "remedy": "– Store the newly calculated data to the FEPROM. The new parameters become active upon the next module startup! – Adjust the number of encoder marks to the EnDat encoder!",
+    "acknowledgement": "POWER ON",
+    "stop_response": "STOP II (SRM, SLM) STOP I (ARM)"
+  },
+  {
+    "code": "800",
+    "name": "Minus hardware limit switch",
+    "cause": "A 1/0 edge was identified at the ”Minus hardware limit switch” input signal.",
+    "remedy": "– In the pos mode: Return the drive to the traversing range using jog key 1 or 2. – In the n-set mode: Enter a setpoint that opposes the approach direction.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "801",
+    "name": "Plus hardware limit switch",
+    "cause": "A 1/0 edge was identified at the ”Plus hardware limit switch” input signal.",
+    "remedy": "– In the pos mode: Return the drive to the traversing range using jog key 1 or 2. – In the n-set mode: Enter a setpoint that opposes the approach direction.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "802",
+    "name": "Drive rotates in response to angular encoder output",
+    "cause": "The drive was not stationary as the zero pulse offset was programmed on the angular encoder interface. Low speeds are not critical, but the inaccuracy of the zero pulse position increases in proportion to speed.",
+    "remedy": "Ensure that the drive is at a standstill, or take into account a higher inaccuracy of the zero pulse.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "804",
+    "name": "Controller enable or on/off 1(edge) or on/off 2/3 missing",
+    "cause": "When starting a traversing block, the controller enable has not been set, or the controller enable is missing during a traversing program when re-starting the axis from standstill. Controller enable missing, i.e. one of the following signals missing: – PROFIBUS control signals (STW1.0: ON / OFF 1 (signal edge), STW1.1: OC / OFF2, STW1.2: OC / OFF 3, STW1.3: Enable inverter / pulse inhibit) and the appropriate signals of the bus interface – PC enable (SimoCom U) – Terminal 64 – Terminal 65.x",
+    "remedy": "Set the missing signal, and re-start the traversing block or enter a signal edge via PROFIBUS.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "805",
+    "name": "Pulse enable missing",
+    "cause": "When starting a traversing block, the pulse enable is not set, or the pulse enable is missing during a traversing program when re-starting the axis from standstill. Pulse enable missing, i.e. one of the following signals missing: – PROFIBUS control signals (STW1.1: OC / OFF 2, STW1.3: Enable inverter / pulse inhibit) or the appropriate signals of the bus interface – Terminal 48 (NE module) – Terminal NS1/NS2 (NE module) – Terminal 63 (NE module) – Terminal 663 (control module)",
+    "remedy": "Set the missing enable signal and then re-start the traversing block.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "806",
+    "name": "OC/reject traversing task missing",
+    "cause": "When starting a traversing block, the ”operating condition / reject traversing task” input signal is not set.",
+    "remedy": "Set the ”operating condition / reject traversing task” input signal and then re-start the traversing block.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "807",
+    "name": "OC/intermediate stop missing",
+    "cause": "When starting a traversing block the ”operating condition / intermediate stop” input signal is not set.",
+    "remedy": "Set the ”operating condition / intermediate stop” input signal and then re-start the traversing block.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "808",
+    "name": "Reference point not set",
+    "cause": "When starting a traversing block, a reference point is not set.",
+    "remedy": "Execute referencing or set a reference point using the ”set reference point” input signal.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "809",
+    "name": "Parking axis selected",
+    "cause": "When starting a traversing block or when starting referencing, the ”parking axis” function is selected.",
+    "remedy": "Cancel the ”parking axis” function and then re-start the required function.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "810",
+    "name": "Velocity in the block \\%n with override = 0",
+    "cause": "The velocity programmed in this block was calculated with the actual override and a value of 0 was obtained. The velocity is set to the lowest unit.",
+    "remedy": "Increase override.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "811",
+    "name": "Absolute value memory, alarm threshold",
+    "cause": "Not enough absolute value memory space.",
+    "remedy": "– Power-down the drive and power-up again – POWER-ON RESET",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "814",
+    "name": "Motor temperature, pre-alarm-b",
+    "cause": "1. The motor temperature is sensed using a temperature sensor (KTY84 or PTC) and evaluated in the drive. This alarm is output if the motor temperature reaches the alarm threshold, motor overtemperature (P1602 for KTY or the PTC-specific switching temperature for PTC). 2. The thermal motor model has reached the thermal motor utilization alarm threshold P1269.",
+    "remedy": "– Avoid many acceleration and braking operations which follow one another quickly. – Check whether the motor output is sufficient for the drive, otherwise use a more powerful motor, possibly together with a higher-rating power section. – Check the motor data. It is possible that the motor current is too high as a result of incorrect motor data. – Check the thermal motor utilization alarm threshold P1269. – Temperature sensor monitoring. – Check the motor fan.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "815",
+    "name": "Power module temperature, pre-alarm",
+    "cause": "The power unit heatsink temperature is sensed using a thermosensor located on the main heatsink. If the overtemperature condition remains, then the drive shuts down after approx. 20 s.",
+    "remedy": "Improve the drive module cooling, e.g. using: – Higher airflow in the switching cabinet, possibly cool the ambient air of the drive modules – Avoid many acceleration and braking operations which follow quickly one after the other – Check that the power section for the axis/spindle is adequate, otherwise use a higher-rating module – Ambient temperature too high (refer to the Planning Guide) – Permissible installation altitude exceeded (refer to the Planning Guide) – Pulse frequency too high (refer to the Planning Guide) – Check fan, if required, replace – Maintain the minimum clearance above and below the power section (refer to the Planning Guide)",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "816",
+    "name": "Resolver sensing at its limit",
+    "cause": "At run-up, the speed with an existing resolver evaluation was extremely high. It is possible that this was not the actual speed, and that the resolver was not connected to the measuring circuit input.",
+    "remedy": "Insert the measuring circuit connector and enter a reset.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "820",
+    "name": "Power module in i2t limiting",
+    "cause": "The power module is being operated too long above the permissible load limit.",
+    "remedy": "– Avoid many acceleration and braking operations which follow quickly one after the other – Check that the power section for the axis/spindle is adequate, otherwise use a higher-rating module – Pulse frequency too high (refer to the Planning Guide) – Check P1260 and P1261",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "824",
+    "name": "Function generator faulted \\%d",
+    "cause": "An error has occurred when activating the function generator.",
+    "remedy": "Read-out the detailed fault cause from P1800 and remove the cause. Fault coding in supplementary info and P1800.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "827",
+    "name": "Fieldbus is not in the data exchange state",
+    "cause": "The bus interface is still not in the data exchange state or data exchange was interrupted. Causes: – The master has not yet run up, or has not yet established a connection to the slave. – The bus addresses differ in the master configuring and slave parameterization. – The bus connection has been physically interrupted. – The master is still in the clear condition. – An illegal parameterization or configuration was received. – A BUS address was assigned several times.",
+    "remedy": "Master, check the assignment of bus addresses and bus connection.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "828",
+    "name": "Fieldbus is not in clock-cycle synchronism to the",
+    "cause": "The bus interface is in the data exchange state and was selected using the parameterizing telegram of the clock-cycle synchronous operation. It was not possible to synchronize to the clock cycle specified by the master and to the master sign of life. Causes: – The master does not send an equidistant global control frame although clock synchronism has been selected via the bus configuration. – The master uses a different equidistant DP clock cycle as was communicated to the slave in the parameterizing telegram. – The master does not increment its sign-of-life in the configured time grid Tmapc.",
+    "remedy": "Check master application and bus configuration Check the consistency between the clock cycle input for the slave configuring and the clock cycle setting at the master. If the master (e.g. SIMATIC S7) does not transfer a sign-of-life, the sign-of-life evalution can also be suppressed using P0879 bit 8.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "829",
+    "name": "PROFIBUS: Illegal parameterization received. Reason:",
+    "cause": "An illegal parameterizing frame was received via PROFIBUS. Cyclic data transfer cannot start. Reasons: 8 = The parameterizing telegram has an illegal length 9 = The length data in the equidistant block is illegal 10 = A block header has an unknown ID. 11 = The basis time Tbasedp is not permissible (not equal to 125 us). 12 = The DP clock cycle Tdp is not permissible (less than 1ms or greater than 32ms). 13 = The time Tmapc is less than 1*Tdp or greater than 14*Tdp. 14 = The base time Tbaseio is not permissible (not equal to 125us). 15 = Time Ti is greater than the DP clock cycle (Tdp). 16 = Time To is greater than the DP clock cycle (Tdp). 17 = For active Data Exchange, a new parameterization was received with different contents. 18 = Clock cycle synchronous operation was selected without a suitable option module having been activated (refer to P0875). 19 = IsoM_Req (state 3, bit 4) is requested in the DPV1 header without there being an isochron block (ID 0x04). 20 = Fail_Safe (state 1, bit 6), IsoM_Req (state 3, bit 4) or Prm_Structure (state 3, bit3) missing in the DPV1 header although an isochron block (ID 0x04) is available. 21 = The time Tdx is greater than (To – 125us) or greater than (Tdp – 250 μs). 22 = The time Tpllw is greater than 1us. 23 = Slave-to-slave communication access target address and length do not conform to word boundary. 24 = Maximum number (3 external + 1 internal) of slave-to-slave communication links has been exceeded. 25 = Maximum number (8) of accesses per link has been exceeded. 26 = Unknown version ID in the slave-to-slave communications block. 27 = The maximum overall length of the filter table has been exceeded. 31 = The permitted maximum length of the parameterizing telegram for the option module has been exceeded. 32 = The option module firmware does not support slave-to-slave communications",
+    "remedy": "Check the bus configuration at the master, and if required correct the parameterization. If required, insert (reason 18) a suitable option module and activate. If required, (reason 31 or reason 32) upgrade the option module firmware to a version greater than or equal to 04.01.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "830",
+    "name": "PROFIBUS: Illegal configuration received. Reason: \\%u",
+    "cause": "An illegal configuration frame was received via PROFIBUS. Cyclic data transfer cannot start. Reasons: 1 = In the master, more axes are configured than are physically present in the power module. 2 = The number of axes configured in the master is not equal to the number axes for which the PROFIBUS-DP option module is actively switched via P0875. Note: Even if axis B is de-activated (passivated), communications with axis B are not automatically de-activated. 3 = Configuration incomplete (too short) for one of the PPL types (only for vor P875 = 2). 4 = No PPO type detected (only for P875 = 2). 5 = Length calculation different between firmware and option module. 6 = For active data exchange, a new configuration was received with different length. 7 = Configuration contained unknown S7 ID. 19 = More PZD’s have been configured than the maximum permissible. 20 = The configurtion contains an unknown special character (only axis separators are permitted). 22 = Target offset of slave-to-slave communications access exceeds the maximum number of PZDs 28 = Number of slave-to-slave communication IDs differs from the number of accesses in the parameterizing telegram. 29 = Setpoint PZDs are not uniformly supplied by the master or slave (drive) publisher. 30 = The permitted maximum length of the configuration telegram for the option module has been exceeded.",
+    "remedy": "Check the bus configuring at the master and if required correct. If required, using P875, activate the option module PROFIBUS-DP, which are previously configured in the PROFIBUS Master for the number of axes involved.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "831",
+    "name": "PROFIBUS is not in the data transfer condition",
+    "cause": "The PROFIBUS is not in a data transfer status (data exchange) or data transfer was interrupted. Causes: – The master has not yet run up, or has not yet established a connection to the slave. – The bus addresses differ in the master configuring and slave parameterization. – The bus connection has been physically interrupted. – The master is still in the clear condition. – An illegal parameterization or configuration was received. – A PROFIBUS address was assigned several times.",
+    "remedy": "Master, check the assignment of bus addresses and bus connection.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "832",
+    "name": "PROFIBUS not clock-synchronous with the master",
+    "cause": "The PROFIBUS is in a data transfer status (data exchange) and has been selected via the parameterizing frame of synchronous operation. It could not yet be synchronized to the clock preset by the master resp. to the master sign-of-life. Causes: – The master does not send an equidistant global control frame although clock synchronism has been selected via the bus configuration. – The master uses a different equidistant DP clock cycle as was communicated to the slave in the parameterizing telegram. – The master increments its sign-of-life (STW2 Bits 12–15) not in the configured time frame Tmapc.",
+    "remedy": "Check master application and bus configuration Check the consistency between the clock cycle input for the slave configuring and the clock cycle setting at the master. If the master (e.g. SIMATIC S7) does not transfer a sign-of-life, the sign-of-life evalution can also be suppressed using P0879 bit 8.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "833",
+    "name": "PROFIBUS: No connection to the publisher \\%u",
+    "cause": "Cyclic data transfer between this slave and a slave-to-slave communications publisher was still not started or was interrupted. Examples: – bus connection interrupted – Publisher failure – Master runs up again – The response monitoring (Watchdog) for this slave was de-activated via the parameterizing telegram (SetPrm) (Diagnostics: P1783:1 bit 3 = 0). Supplementary info: PROFIBUS address of the publisher",
+    "remedy": "Check the publisher and bus connections to the publisher, to the master and between the master and publisher. if the watchdog is de-activated, activate the response monitoring for this slave via Drive ES.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "840",
+    "name": "Teach-in for running traversing program",
+    "cause": "Teach-in was requested during a running traversing program.",
+    "remedy": "Exit the traversing program and re-request teach-in.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "841",
+    "name": "Teach-in for relative block",
+    "cause": "The traversing block as ”teach in block” is relative instead of absolute.",
+    "remedy": "Change the traversing block mode ”teach in block” from relative to absolute.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "842",
+    "name": "Teach-in for a relative standard block",
+    "cause": "The traversing block as ”teach in standard set”, is relative instead of absolute.",
+    "remedy": "Change the traversing block mode ”teach in standard block” from relative to absolute.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "843",
+    "name": "Search velocity too high",
+    "cause": "The search velocity for spindle positioning is too high for the selected maximum deceleration.",
+    "remedy": "Reduce the search speed P0082:256 or increase the maximum deceleration P0104.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "845",
+    "name": "Jogging not effective for active coupling",
+    "cause": "Jogging is not possible while a coupling is closed.",
+    "remedy": "Release the coupling and re-activate jogging.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "849",
+    "name": "PLUS software limit switch actuated",
+    "cause": "For a block with the ENDLOS_POS command, the axis has actuated the plus software limit switch (P0316) for absolute or relative positioning. The behavior for software limit switch reached, can be set using P0118.0.",
+    "remedy": "– Move away in the negative direction, jogging. – Move away in the negative direction using the traversing block.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "850",
+    "name": "MINUS software limit switch actuated",
+    "cause": "For a block with the ENDLOS_NEG command, the axis has actuated the minus software limit switch (P0315) for absolute or relative positioning The behavior for software limit switch reached, can be set using P0118.0.",
+    "remedy": "– Move away in the positive direction, jogging. – Move away in the positive direction using the traversing block.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "864",
+    "name": "Parameterization error in speed controller adaptation",
+    "cause": "The upper adaption speed (P1412) was parameterized with a lower value than the lower adaption speed (P1411).",
+    "remedy": "P1412 must contain a higher value than P1411.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "865",
+    "name": "Invalid signal number",
+    "cause": "The signal number for the analog output is not permissible. An analog value can be output for diagnostic, service and optimization tasks Term. 75.x/15, 16.x/15, DAC1, DAC2",
+    "remedy": "Enter valid signal number (refer to the Description of Functions SIMODRIVE 611 universal)",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "866",
+    "name": "Parameterizing error, current controller adaption",
+    "cause": "For the current controller adaption, the upper current limit (P1181) was parameterized with a lower value than the lower current limit (P1180). Adaption is de-activated when the parameterizing error is output.",
+    "remedy": "P1181 must contain a higher value than P1180.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "867",
+    "name": "Generator mode: Response voltage > shutdown",
+    "cause": "The sum of the values in P1631 + P1632 is greater than the value in P1633.",
+    "remedy": "Boot module Note: P1630 to P1633 are internal Siemens parameters",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "868",
+    "name": "Regenerative operation: shutdown threshold > response threshold",
+    "cause": "The input value for the shutdown threshold, regenerative operation (P1633) is greater than (or equal to) the response threshold, DC link voltage (P1630).",
+    "remedy": "Boot module Note: P1630 and P1633 are internal Siemens parameters",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "869",
+    "name": "Reference point coordinate limited to modulo range",
+    "cause": "The reference point coordinate is internally limited to the modulo range.",
+    "remedy": "Enter a value in P0160 which lies within the modulo range (P0242).",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "870",
+    "name": "Jerk: jerk time is limited",
+    "cause": "When calculating the jerk time T from the acceleration a and the jerk r, the result was an excessively high jerk time, so that the time is limited internally. The following is valid: T = a/r, where a: Acceleration (higher value from P0103 and P0104) r: Jerk (P0107)",
+    "remedy": "– Increase jerk (P0107) – Reduce maximum acceleration (P0103) or maximum deceleration (P0104)",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "871",
+    "name": "Induction motor operation: drive converter frequency",
+    "cause": "In induction motor operation (selected by P1465 < P1146), drive converter frequencies of 4 or 8 kHz are permissible.",
+    "remedy": "– Change P1100 – Cancel induction motor operation (P1465 > P1146)",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "872",
+    "name": "PARAMETERIZING ERROR: P gain, equalization controller too high",
+    "cause": "PARAMETERIZING ERROR: P gain, equalization controller does not fit into the format.",
+    "remedy": "– Change P1491",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "875",
+    "name": "Axial deviations in fixed voltage",
+    "cause": "For the axes of a drive module, an unequal fixed voltage (P1161) was set. As a fixed voltage <> 0 replaces the DC link voltage measured value, but the DC link voltage is only measured once for all drives of a drive module, the fixed voltage on all module axes must be equal, before it is accepted.",
+    "remedy": "Set the same fixed voltage (P1161) on all module axes.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "876",
+    "name": "Terminal function \\%u in the actual mode illegal",
+    "cause": "The function number, used as input terminal or distributed input (P0888) may not be used in the actual mode.",
+    "remedy": "Change P0700 (operating mode) or enter a suitable function number in P0888 or P0660, P0661 etc.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "877",
+    "name": "Output function \\%u not permissible in the actual operating mode",
+    "cause": "The function number, used as output, may not be used in the actual operating mode.",
+    "remedy": "Change P0700 (operating mode) or enter a suitable function number in P0680, P0681, etc.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "878",
+    "name": "Input I0.x not parameterized as equivalent zero mark",
+    "cause": "When entering an external signal as equivalent zero mark (P0174 = 2) input I0.x must be assigned the function ”equivalent zero mark” (Fct. No.: 79). if a direct measuring system is used, input I0.B must be assigned the ”equivalent zero mark” function (Fct. No.: 79).",
+    "remedy": "– Motor measuring system: P0660 = 79 – Direct measuring system: P0672 = 79",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "879",
+    "name": "Time constant deadtime, speed feedforward control",
+    "cause": "P0205:8 may not be greater than two position controller clock cycles. Higher values are internally limited.",
+    "remedy": "Reduce P0205:8 to max. two position controller clock cycles (P1009). Parameterize an addition delay via P0206:8.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "881",
+    "name": "PZD configuring: Signal number in P0915:\\%u invalid",
+    "cause": "An undefined or illegal signal number in the current operating mode (P0700) was identified for the process data software. P0915:1 is not equal to 50001 (STW1). The process data for encoder 1 has been configured although encoderless operation is activated (P1011.5). The process data for encoder 2 were configured although the direct measuring system is not activated (P0879.12).",
+    "remedy": "Correct P0915:17",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "882",
+    "name": "PZD configuring: Double word signal number in",
+    "cause": "For signals with double words (length = 32 bits), the corresponding signal identifier must be configured twice for adjacent process data. The following subparameter must therefore also be parameterized with the same signal number.",
+    "remedy": "Correct P0915:17",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "883",
+    "name": "PZD configuring: Signal number in P0916:\\%u invalid",
+    "cause": "An undefined or illegal signal number in the current operating mode (P0700) was identified for the process data software. P0916:1 is not equal to 50002 (ZSW1). The process data for encoder 1 has been configured although encoderless operation is activated (P1011.5). The process data for encoder 2 were configured although the direct measuring system is not activated (P0879.12).",
+    "remedy": "Correct P0916:17",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "884",
+    "name": "PZD configuring: Double word signal number in",
+    "cause": "For signals with double words (length = 32 bits), the corresponding signal identifier must be configured twice for adjacent process data. The following subparameter must therefore also be parameterized with the same signal number.",
+    "remedy": "Correct P0916:17",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "885",
+    "name": "P1261 greater than 100.0 % not permissible",
+    "cause": "P1261 greater than 100.0 % is not permissible for permanent-magnet synchronous motors with field weakening (PE spindle, P1015 = 1). It is internally limited to 100.0 %.",
+    "remedy": "Set P1261 to max. 100.0 %.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "886",
+    "name": "Pre-tensioning torque greater than 16x rated torque",
+    "cause": "The parameterized pre-tensioning torque (P1493) is greater than 16x the standstill torque (SRM), rated motor torque (ARM) and standstill force (SLM) of the motor. Note: refer to the index entry ”Limits”",
+    "remedy": "Reduce pre-tensioning torque (P1493)",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "889",
+    "name": "Fixed endstop, axis has not reached the clamping",
+    "cause": "The axis has reached the fixed stop – however was not able to establish the programmed clamping torque",
+    "remedy": "Check the parameters for the limits.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "890",
+    "name": "Acceleration – deceleration override incorrect",
+    "cause": "The acceleratino override or the deceleration override is not in the range from 1% to 100%. if the value > 100%, then it is limited to 100%. If the value < 1%, then limited to 1%. The traversing block is not interrupted.",
+    "remedy": "Check the programming of the acceleration override and deceleration override.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "891",
+    "name": "PLUS software limit switch actuated coupled",
+    "cause": "With the actual master drive velocity, this coupling axis will probably reach or pass the PLUS software limit switch. This warning is output if the coupled axis has fallen below 200% of the braking travel up to the PLUS software limit switch.",
+    "remedy": "Traverse the master drive so that this coupling axis goes into the permissible traversing range.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "892",
+    "name": "MINUS software limit switch actuated coupled",
+    "cause": "With the actual master drive velocity, this coupling axis will probably reach or pass the MINUS software limit switch. This warning is output if the coupled axis has fallen below 200% of the braking travel up to the MINUS software limit switch.",
+    "remedy": "Traverse the master drive so that this coupling axis goes into the permissible traversing range.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "893",
+    "name": "Function 73 only effective at terminal I0.x",
+    "cause": "The terminal function 73 ”Coupling on I0” is only effective at terminal I0.x.",
+    "remedy": "Assign terminal I0.x to function 73.",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "894",
+    "name": "Inputs, optional TERMINAL module assigned twice",
+    "cause": "The input terminals on the optional TERMINAL module can only be used by one drive.",
+    "remedy": "Check and correct P0676 (A) and P0676 (B).",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  },
+  {
+    "code": "895",
+    "name": "Outputs, optional TERMINAL module assigned twice",
+    "cause": "Only one drive can use the output terminals on the optional TERMINAL module.",
+    "remedy": "Check and correct P0696 (A) and P0696 (B).",
+    "acknowledgement": "not required",
+    "stop_response": "STOP VII"
+  }
+]
